@@ -1,0 +1,31 @@
+{
+  "name": "movie-mates",
+  "private": true,
+  "dependencies": {
+    "@rails/actioncable": "^6.0.0",
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "5.2.1",
+    "turbolinks": "^5.2.0"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "bootstrap": "^4.6.0",
+    "eslint": "^7.24.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-import-resolver-webpack": "^0.13.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jquery": "^3.6.0",
+    "npm-run-all": "^4.1.5",
+    "popper.js": "^1.16.1",
+    "prettier": "^2.2.1",
+    "stylelint": "^13.12.0",
+    "stylelint-config-recommended-scss": "^4.2.0",
+    "stylelint-config-standard": "^21.0.0",
+    "stylelint-declaration-use-variable": "^1.7.2",
+    "stylelint-scss": "^3.19.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
