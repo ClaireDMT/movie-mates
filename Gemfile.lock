@@ -100,6 +100,11 @@ GEM
       railties (>= 3.2)
     erubi (1.10.0)
     execjs (2.7.0)
+    faraday (1.3.0)
+      faraday-net_http (~> 1.0)
+      multipart-post (>= 1.2, < 3)
+      ruby2_keywords
+    faraday-net_http (1.0.1)
     ffi (1.15.0)
     font-awesome-sass (5.15.1)
       sassc (>= 1.11)
@@ -122,6 +127,7 @@ GEM
     mini_mime (1.0.3)
     minitest (5.14.4)
     msgpack (1.4.2)
+    multipart-post (2.1.1)
     name_of_person (1.1.1)
       activesupport (>= 5.2.0)
     nio4r (2.5.7)
@@ -210,6 +216,7 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     ruby-progressbar (1.11.0)
+    ruby2_keywords (0.0.4)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -277,6 +284,7 @@ DEPENDENCIES
   byebug
   devise
   dotenv-rails
+  faraday
   font-awesome-sass
   jbuilder (~> 2.7)
   listen (~> 3.3)
