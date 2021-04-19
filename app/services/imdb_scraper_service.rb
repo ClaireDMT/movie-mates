@@ -6,8 +6,12 @@ class ImdbScraperService
 		url = "https://www.imdb.com/title/#{imdb_id}/"
 		html_file = URI.open(url).read
 		html_doc = Nokogiri::HTML(html_file)
-		rating = html_doc.search(".imdbRating [itemprop='ratingValue']")[0].text.strip.to_f
-		rating_number = html_doc.search(".imdbRating [itemprop='ratingCount']")[0].text.delete(",").to_i
+		# rating
+		rating = html_doc.search(".imdbRating [itemprop='ratingValue']")[0]
+		rating = rating.text.strip.to_f if rating
+		# number of ratings
+		rating_number = html_doc.search(".imdbRating [itemprop='ratingCount']")[0]
+		rating_number = rating_number.text.delete(",").to_i if rating_number
 		{rating: rating, rating_number: rating_number }
 	end
 end
