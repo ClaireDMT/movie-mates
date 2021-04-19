@@ -1,3 +1,3 @@
 class Movie < ApplicationRecord
-  belongs_to :director, class_name: "Crew"
+  validates :tmdb_id, uniqueness: true
 end

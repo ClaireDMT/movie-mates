@@ -42,14 +42,14 @@ ActiveRecord::Schema.define(version: 2021_04_15_132933) do
     t.string "title"
     t.string "language"
     t.integer "year"
-    t.string "imdb_rating"
+    t.float "imdb_rating"
+    t.float "rotten_rating"
     t.text "overview"
     t.string "imdb_id"
+    t.integer "tmdb_id"
     t.string "poster_url"
-    t.bigint "crew_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["crew_id"], name: "index_movies_on_crew_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,5 +66,4 @@ ActiveRecord::Schema.define(version: 2021_04_15_132933) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "movies", "crews"
 end

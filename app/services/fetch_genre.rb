@@ -1,6 +1,6 @@
 class FetchGenre < ApplicationService
   def call
-    genres = fetch("genre/movie/list")["genres"]
+    genres = api_query("genre/movie/list")["genres"]
     inserted = genres.map do |genre|
       Genre.new(name: genre["name"]).save
     end
