@@ -8,10 +8,10 @@ class ImdbScraperService
 		html_doc = Nokogiri::HTML(html_file)
 		# rating
 		rating = html_doc.search(".imdbRating [itemprop='ratingValue']")[0]
-		rating = rating.text.strip.to_f if rating
+		rating = rating ? rating.text.strip.to_f : 0.0
 		# number of ratings
 		rating_number = html_doc.search(".imdbRating [itemprop='ratingCount']")[0]
-		rating_number = rating_number.text.delete(",").to_i if rating_number
+		rating_number =  rating_number ? rating_number.text.delete(",").to_i : 0
 		{rating: rating, rating_number: rating_number }
 	end
 end
