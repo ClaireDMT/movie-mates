@@ -13,18 +13,28 @@ class FetchMovies < ApplicationService
     results = api_query(PATH_MOVIES, query + "&page=#{page}")["results"]
     puts "starting page #{page}"
     saved = results.map do |result|
-      if Movie.find_by(tmdb_id: result['id']).nil?
+      if not_in_db?(result['id'])
         full_movie = api_query("movie/#{result['id']}")
-        movie = create_movie(full_movie)
-        movie.save
+        imdb_infos = (full_movie["imdb_id"]).blank? ? nil : check_rating?(full_movie["imdb_id"])
+        if imdb_infos && imdb_infos[:rating] > 3.0 && imdb_infos[:rating_number] > 100
+          movie = create_movie(full_movie, imdb_infos[:rating])
+          movie.save
+        end
       end
     end
     saved.count(true)
   end
 
-  def create_movie(hash)
-    puts "checking IMDB rating for #{hash["title"]} #{hash["imdb_id"]}"
-    imdb = ImdbScraperService.new.call(hash["imdb_id"])
+  def not_in_db?(tmdb_id)
+    Movie.find_by(tmdb_id: tmdb_id).nil?
+  end
+
+  def check_rating?(imdb_id)
+    puts "checking IMDB rating for #{imdb_id}"
+    ImdbScraperService.new.call(imdb_id)
+  end
+
+  def create_movie(hash, rating)
     movie = Movie.new(
       en_title: hash["title"],
       title: hash["original_title"],
@@ -34,8 +44,7 @@ class FetchMovies < ApplicationService
       poster_url: hash["poster_path"],
       imdb_id: hash["imdb_id"],
       tmdb_id: hash["id"].to_i,
+      imdb_rating: rating
     )
-    movie.imdb_rating = imdb[:rating] if imdb[:rating] > 3.0 && imdb[:rating_number] > 100
-    return movie
   end
 end
