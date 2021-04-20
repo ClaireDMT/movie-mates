@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_15_132933) do
+ActiveRecord::Schema.define(version: 2021_04_20_151757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,25 @@ ActiveRecord::Schema.define(version: 2021_04_15_132933) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "movie_crews", force: :cascade do |t|
+    t.bigint "movie_id", null: false
+    t.bigint "crew_id", null: false
+    t.string "job"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["crew_id"], name: "index_movie_crews_on_crew_id"
+    t.index ["movie_id"], name: "index_movie_crews_on_movie_id"
+  end
+
+  create_table "movie_genres", force: :cascade do |t|
+    t.bigint "movie_id", null: false
+    t.bigint "genre_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["genre_id"], name: "index_movie_genres_on_genre_id"
+    t.index ["movie_id"], name: "index_movie_genres_on_movie_id"
   end
 
   create_table "movies", force: :cascade do |t|
@@ -66,4 +85,8 @@ ActiveRecord::Schema.define(version: 2021_04_15_132933) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "movie_crews", "crews"
+  add_foreign_key "movie_crews", "movies"
+  add_foreign_key "movie_genres", "genres"
+  add_foreign_key "movie_genres", "movies"
 end
