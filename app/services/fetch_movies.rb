@@ -25,6 +25,7 @@ class FetchMovies < ApplicationService
     saved.count(true)
   end
 
+  # TO DO: as a helper?
   def not_in_db?(tmdb_id)
     Movie.find_by(tmdb_id: tmdb_id).nil?
   end
@@ -35,7 +36,7 @@ class FetchMovies < ApplicationService
   end
 
   def create_movie(hash, rating)
-    movie = Movie.new(
+    Movie.new(
       en_title: hash["title"],
       title: hash["original_title"],
       overview: hash["overview"],
