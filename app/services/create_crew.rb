@@ -5,6 +5,7 @@ class CreateCrew < ApplicationService
     result = api_query("/person/#{tmdb_id}")
     crew = create_crew(result)
     crew.save
+    puts "Saved #{crew.name}!"
     return crew
   end
 
