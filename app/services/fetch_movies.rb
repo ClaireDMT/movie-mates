@@ -32,7 +32,7 @@ class FetchMovies < ApplicationService
 
   def check_rating?(imdb_id)
     puts "checking IMDB rating for #{imdb_id}"
-    ImdbScraperService.new.call(imdb_id)
+    ImdbScraper.new.call(imdb_id)
   end
 
   def create_movie(hash, rating)
