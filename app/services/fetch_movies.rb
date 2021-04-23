@@ -5,11 +5,12 @@ class FetchMovies < ApplicationService
   def initialize
     @fetch_movie = FetchMovie.new
     @fetch_cast = FetchCast.new
+    @add_genre = AddMovieGenres.new
   end
 
   def call(year)
     pages = api_query(PATH_MOVIES, QUERY + year.to_s)["total_pages"]
-    (1..pages).map { |page| fetch_movies(page, QUERY + year.to_s) }.sum
+    (1..2).map { |page| fetch_movies(page, QUERY + year.to_s) }.sum
   end
 
   private
@@ -19,8 +20,12 @@ class FetchMovies < ApplicationService
     puts "starting page #{page}"
     saved = results.map do |result|
       movie = @fetch_movie.call(result) if not_in_db?(result['id'])
-      p "fetching cast and director!"
-      @fetch_cast.call(movie) if movie
+      if movie
+        p "adding genre to movies!"
+        @add_genre.call(result["genre_ids"], movie)
+        p "fetching cast and director!"
+        @fetch_cast.call(movie)
+      end
       movie ? true : false
     end
     p "----------------- end of page #{page} -------------------"
