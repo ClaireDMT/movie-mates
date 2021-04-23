@@ -1,7 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 
-class ImdbScraperService
+class ImdbScraper
 	def call(imdb_id)
 		url = "https://www.imdb.com/title/#{imdb_id}/"
 		html_file = URI.open(url).read

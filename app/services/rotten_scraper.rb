@@ -1,7 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 
-class RottenScraperService
+class RottenScraper
 	def call(title, year)
 		query = { search: title}.to_query
 		url = "https://www.rottentomatoes.com/search?search=#{query}"
