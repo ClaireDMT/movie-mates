@@ -1,4 +1,4 @@
-class FetchMovies < ApplicationService
+class FetchDirectorService < ApplicationService
 
   def call(tmdb_id)
     path = "movie/#{tmdb_id}/credits"
