@@ -1,7 +1,7 @@
 class MoviesJob < ApplicationJob
   queue_as :default
 
-  def perform
-
+  def perform(year)
+    MoviesGraber::FetchMovies.call(year)
   end
 end
