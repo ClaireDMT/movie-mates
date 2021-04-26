@@ -19,7 +19,7 @@ module MoviesGraber
           p "adding genre to movies!"
           AddMovieGenres.call(result["genre_ids"], movie)
           p "fetching cast and director!"
-          FetchCast.call(movie)
+          CrewsGraber::FetchCast.call(movie)
         end
         movie ? true : false
       end

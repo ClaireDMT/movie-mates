@@ -25,7 +25,7 @@ module CrewsGraber
     def age(dob)
       date_bday = Date.new(dob.to_i, dob[5..6].to_i, dob[8..9].to_i)
       now = Time.now.utc.to_date
-      now.year - date_bday.year - (now.month > date_bday.month || (now.month == date_bday.month && now.day >= date_bday.day)) ? 0 : 1
+      now.year - date_bday.year - ((now.month > date_bday.month || (now.month == date_bday.month && now.day >= date_bday.day)) ? 0 : 1)
     end
   end
 end

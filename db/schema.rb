@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 2021_04_20_151757) do
     t.integer "tmdb_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_crews_on_name"
+    t.index ["tmdb_id"], name: "index_crews_on_tmdb_id"
   end
 
   create_table "genres", force: :cascade do |t|
@@ -63,13 +65,17 @@ ActiveRecord::Schema.define(version: 2021_04_20_151757) do
     t.string "language"
     t.integer "year"
     t.float "imdb_rating"
-    t.float "rotten_rating"
     t.text "overview"
     t.string "imdb_id"
     t.integer "tmdb_id"
     t.string "poster_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["en_title"], name: "index_movies_on_en_title"
+    t.index ["imdb_rating"], name: "index_movies_on_imdb_rating"
+    t.index ["title"], name: "index_movies_on_title"
+    t.index ["tmdb_id"], name: "index_movies_on_tmdb_id"
+    t.index ["year"], name: "index_movies_on_year"
   end
 
   create_table "users", force: :cascade do |t|
