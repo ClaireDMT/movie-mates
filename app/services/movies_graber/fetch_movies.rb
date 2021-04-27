@@ -5,7 +5,7 @@ module MoviesGraber
 
     def call(year)
       pages = api_query(PATH_MOVIES, QUERY + year.to_s)["total_pages"]
-      (1..2).sum { |page| fetch_movies(page, QUERY + year.to_s) }
+      (1..pages).sum { |page| fetch_movies(page, QUERY + year.to_s) }
     end
 
     private
