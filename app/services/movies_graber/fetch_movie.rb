@@ -15,7 +15,7 @@ module MoviesGraber
 
     def movie_good?(movie)
       imdb_infos = (movie["imdb_id"]).blank? ? nil : check_rating?(movie["imdb_id"])
-      return imdb_infos if imdb_infos && imdb_infos[:rating] > 3.0 && imdb_infos[:rating_number] > 100
+      return imdb_infos if imdb_infos && imdb_infos[:rating] > 5.0 && imdb_infos[:rating_number] > 100
 
       false
     end
