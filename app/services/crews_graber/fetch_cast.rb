@@ -2,7 +2,7 @@ module CrewsGraber
   class FetchCast < ApplicationService
     def call(movie)
       results = api_query("/movie/#{movie.tmdb_id}/credits")
-      add_actors(results["cast"].take(30), movie)
+      add_actors(results["cast"].take(15), movie)
       directors = results["crew"].select { |crew| crew["job"] == "Director" }
       add_directors(directors, movie)
     end
