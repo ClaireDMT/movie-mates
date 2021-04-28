@@ -38,6 +38,8 @@ gem 'name_of_person'
 gem 'bootstrap'
 gem 'font-awesome-sass'
 gem 'autoprefixer-rails'
+gem 'react-rails'
+
 group :development, :test do
 gem 'pry-byebug'
 gem 'pry-rails'
