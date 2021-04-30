@@ -1,6 +1,7 @@
 import React , { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import Genre from './Genre';
+import './Genres.scss';
 
 const Genres = () => {
   const [genres, setGenres] = useState([])
@@ -24,10 +25,10 @@ const Genres = () => {
   })
   return (
     <Fragment>
-      <div>
-        This is the genre list!
+      <h1>Select a movie genre</h1>
+      <div className="genres__list">
+        {grid}
       </div>
-      <ul>{grid}</ul>
     </Fragment>
   );
 };
