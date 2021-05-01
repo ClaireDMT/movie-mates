@@ -14,7 +14,7 @@ module MoviesGraber
       results = api_query(PATH_MOVIES, query + "&page=#{page}")["results"]
       puts "starting page #{page}"
       saved = results.map do |result|
-        movie = FetchMovie.call(result) if not_in_db?(result['id'])
+        movie = FetchMovie.call(result) if not_in_db?(result['id']) && not_tv_movies(result)
         if movie
           p "adding genre to movies!"
           AddMovieGenres.call(result["genre_ids"], movie)
@@ -29,6 +29,10 @@ module MoviesGraber
 
     def not_in_db?(tmdb_id)
       Movie.find_by(tmdb_id: tmdb_id).nil?
+    end
+
+    def not_tv_movies(result)
+      result["genre_ids"].exclude?(10_770)
     end
   end
 end
