@@ -1,0 +1,12 @@
+nav {
+  height: 70px;
+  width: 100%;
+  background-color: $dark-pink;
+  border-top: 1px solid $light-black;
+  position: fixed;
+  bottom: 0;
+
+  img {
+    height: 32px;
+  }
+}

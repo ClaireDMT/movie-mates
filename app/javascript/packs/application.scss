@@ -1,0 +1,36 @@
+// Graphical variables
+// @import "../stylesheet/config/bootstrap_variables";
+@import "../stylesheet/config/colors";
+@import "../stylesheet/config/fonts";
+
+// External libraries
+@import "bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";
+
+// @import "font-awesome-sprockets";
+// @import "font-awesome";
+
+// Your CSS partials
+@import "../stylesheet/components/index";
+
+
+
+body {
+  background-color: $black;
+  color: white;
+  font-family: $body-font;
+}
+
+h1, h2 {
+  color: $white;
+  font-family: $headers-font;
+  font-size: 32px;
+  font-weight: 200;
+  text-align: center;
+  margin: 16px 0;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}

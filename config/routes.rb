@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  get '*path', to: 'pages#index', via: :all
+  get '*path', to: 'pages#home', via: :all
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

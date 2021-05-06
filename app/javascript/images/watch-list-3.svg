@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><script id="metastreaminitscript">(function() {
+    document.getElementById('metastreaminitscript').remove()
+
+    const INIT_TIMEOUT = 5e3
+    const isFirefox = navigator.userAgent.toLowerCase().includes('firefox')
+
+    //=========================================================================
+    // document.createElement proxy
+    //=========================================================================
+
+    window.__metastreamMediaElements = new Set()
+
+    // Proxy document.createElement to trap media elements created in-memory
+    const origCreateElement = document.createElement
+    const proxyCreateElement = function() {
+      const element = origCreateElement.apply(document, arguments)
+      if (window.__metastreamMediaElements &amp;&amp; element instanceof HTMLMediaElement) {
+        window.__metastreamMediaElements.add(element)
+      }
+      return element
+    }
+    proxyCreateElement.toString = origCreateElement.toString.bind(origCreateElement)
+    document.createElement = proxyCreateElement
+
+    setTimeout(() =&gt; {
+      if (window.__metastreamMediaElements) {
+        window.__metastreamMediaElements.clear()
+        window.__metastreamMediaElements = undefined
+      }
+    }, INIT_TIMEOUT)
+
+    //=========================================================================
+    // navigator.mediaSession proxy (Firefox)
+    //=========================================================================
+
+    if (isFirefox) {
+      // stub out MediaSession API until Firefox supports this natively
+      if (!navigator.mediaSession) {
+        const noop = () =&gt; {}
+        const mediaSessionStub = {
+          __installedByMetastreamRemote__: true,
+          setActionHandler: noop
+        }
+        Object.defineProperty(window.navigator, 'mediaSession', {
+          value: mediaSessionStub,
+          enumerable: false,
+          writable: true
+        })
+
+        function MediaMetadata(metadata) {
+          Object.assign(this, metadata)
+        }
+        window.MediaMetadata = MediaMetadata
+      }
+
+      const { mediaSession } = navigator
+
+      // Capture action handlers for player.js proxy
+      mediaSession._handlers = {}
+
+      const _setActionHandler = mediaSession.setActionHandler
+      mediaSession.setActionHandler = function(name, handler) {
+        mediaSession._handlers[name] = handler
+        _setActionHandler.apply(mediaSession, arguments)
+      }
+    }
+
+    //=========================================================================
+    // document.domain fix (Firefox)
+    //=========================================================================
+
+    if (isFirefox) {
+      const domains = ['twitch.tv', 'crunchyroll.com']
+
+      // Fix for setting document.domain in sandboxed iframe
+      try {
+        const { domain } = document
+        if (domain &amp;&amp; domains.some(d =&gt; domain.includes(d))) {
+          Object.defineProperty(document, 'domain', {
+            value: domain,
+            writable: true
+          })
+        }
+      } catch (e) {}
+    }
+
+    //=========================================================================
+    // Inline script embed prevention fix
+    //=========================================================================
+
+    const observeScripts = () =&gt; {
+      const scriptSnippets = [
+        { code: 'window.top !== window.self', replacement: 'false' },
+        { code: 'self == top', replacement: 'true' },
+        { code: 'top.location != window.location', replacement: 'false' }
+      ]
+
+      const getAddedScripts = mutationList =&gt;
+        mutationList.reduce((scripts, mutation) =&gt; {
+          if (mutation.type !== 'childList') return scripts
+          const inlineScripts = Array.from(mutation.addedNodes).filter(
+            node =&gt; node instanceof HTMLScriptElement &amp;&amp; node.textContent.length &gt; 0
+          )
+          return inlineScripts.length &gt; 0 ? [...scripts, ...inlineScripts] : scripts
+        }, [])
+
+      // Modifies inline scripts to allow embedding content in iframe
+      const inlineScriptModifier = mutationsList =&gt; {
+        const scripts = getAddedScripts(mutationsList)
+        for (let script of scripts) {
+          for (let snippet of scriptSnippets) {
+            if (script.textContent.includes(snippet.code)) {
+              script.textContent = script.textContent.split(snippet.code).join(snippet.replacement)
+            }
+          }
+        }
+      }
+
+      const observer = new MutationObserver(inlineScriptModifier)
+      observer.observe(document.documentElement, { childList: true, subtree: true })
+
+      // Stop watching for changes after we finish loading
+      window.addEventListener('load', () =&gt; observer.disconnect())
+    }
+
+    observeScripts()
+  }());</script><g xmlns="http://www.w3.org/2000/svg"><path d="m144.313 159.267h9.979c-3.827-5.244-7.059-10.942-9.695-16.98-4.762-11.026-7.398-23.102-7.398-35.773 0-11.056 2.013-21.714 5.726-31.578 3.827-10.233 9.44-19.56 16.47-27.61 2.721-3.118 7.455-3.431 10.545-.709 3.118 2.722 3.43 7.427.708 10.545-5.868 6.718-10.545 14.486-13.72 22.99-3.061 8.163-4.734 17.036-4.734 26.362 0 10.659 2.183 20.749 6.123 29.849 3.713 8.561 9.014 16.328 15.505 22.904h106.896c6.491-6.576 11.792-14.343 15.505-22.904 3.94-9.1 6.123-19.19 6.123-29.849 0-20.722-8.391-39.516-21.997-53.094-13.579-13.577-32.344-21.996-53.094-21.996-5.726 0-11.254.623-16.498 1.785-5.386 1.219-10.63 3.033-15.591 5.386-3.742 1.786-8.192.171-9.95-3.571-1.786-3.742-.17-8.192 3.572-9.949 5.868-2.778 12.161-4.961 18.766-6.435 6.407-1.446 13.011-2.212 19.701-2.212 24.889 0 47.396 10.092 63.724 26.391 7.909 7.909 14.343 17.292 18.879 27.696 3.713-8.504 8.702-16.329 14.712-23.188 2.721-3.118 7.455-3.431 10.545-.709 3.118 2.722 3.43 7.427.708 10.545-5.868 6.718-10.545 14.486-13.748 22.99-3.062 8.163-4.734 17.036-4.734 26.362 0 10.659 2.211 20.749 6.152 29.849 3.713 8.561 8.985 16.328 15.505 22.904h106.867c6.52-6.576 11.821-14.343 15.534-22.904 3.94-9.1 6.123-19.19 6.123-29.849 0-20.722-8.419-39.516-21.997-53.094-13.578-13.577-32.343-21.996-53.093-21.996-5.754 0-11.254.623-16.498 1.785-5.386 1.219-10.63 3.033-15.591 5.386-3.742 1.786-8.192.171-9.978-3.571-1.757-3.742-.142-8.192 3.572-9.949 5.896-2.778 12.189-4.961 18.766-6.435 6.435-1.446 13.04-2.212 19.729-2.212 24.889 0 47.396 10.092 63.695 26.391 16.299 16.3 26.391 38.835 26.391 63.696 0 12.671-2.636 24.747-7.427 35.773-2.608 6.038-5.868 11.736-9.666 16.98h9.949c10.092 0 19.248 4.139 25.881 10.772 6.635 6.631 10.745 15.786 10.745 25.85v195.11c0 10.092-4.11 19.247-10.744 25.881-6.633 6.633-15.789 10.743-25.881 10.743h-53.093l-17.858 62.505c-.907 3.231-3.855 5.442-7.2 5.442h-174.73c-3.543 0-6.52-2.466-7.313-5.782l-17.745-62.165h-53.123c-10.063 0-19.219-4.11-25.852-10.743-6.633-6.634-10.771-15.79-10.771-25.881v-43.456h-25.768v14.825c0 3.629-2.58 6.691-6.038 7.371l-66.303 19.219c-4.733 1.39-9.581-2.21-9.581-7.17v-71.35c0-4.139 3.373-7.512 7.512-7.512 4.138 0 7.483 3.373 7.483 7.512v61.399l51.932-15.081c0-42.208 0-84.417 0-126.625l-51.932-15.052v61.371c0 4.168-3.345 7.512-7.483 7.512-4.139 0-7.512-3.345-7.512-7.512v-71.348c0-5.301 5.358-8.873 10.205-6.974l66.303 19.219c3.203.936 5.414 3.855 5.414 7.172v14.826h25.767v-43.456c0-10.064 4.139-19.219 10.771-25.852 6.635-6.662 15.79-10.772 25.853-10.772zm248.12-90.03c10.29 0 19.616 4.167 26.363 10.914 6.746 6.746 10.913 16.072 10.913 26.362 0 10.289-4.167 19.616-10.913 26.362-6.747 6.747-16.073 10.914-26.363 10.914s-19.616-4.167-26.362-10.914c-6.747-6.746-10.914-16.072-10.914-26.362s4.167-19.616 10.914-26.362c6.746-6.747 16.072-10.914 26.362-10.914zm15.761 21.516c-4.025-4.025-9.61-6.52-15.761-6.52s-11.707 2.494-15.761 6.52c-4.025 4.053-6.52 9.609-6.52 15.761 0 6.151 2.494 11.736 6.52 15.76 4.054 4.025 9.609 6.521 15.761 6.521 6.151 0 11.736-2.495 15.761-6.521 4.025-4.024 6.52-9.609 6.52-15.76 0-6.152-2.495-11.708-6.52-15.761zm-180.938-21.516c10.318 0 19.616 4.167 26.363 10.914 6.746 6.746 10.913 16.072 10.913 26.362 0 10.289-4.167 19.616-10.913 26.362-6.747 6.747-16.044 10.914-26.363 10.914-10.29 0-19.587-4.167-26.334-10.914-6.747-6.746-10.942-16.072-10.942-26.362s4.196-19.616 10.942-26.362c6.747-6.747 16.044-10.914 26.334-10.914zm15.762 21.516c-4.025-4.025-9.582-6.52-15.761-6.52-6.151 0-11.707 2.494-15.732 6.52-4.025 4.053-6.52 9.609-6.52 15.761 0 6.151 2.494 11.736 6.52 15.76 4.025 4.025 9.581 6.521 15.732 6.521s11.736-2.495 15.761-6.521c4.025-4.024 6.52-9.609 6.52-15.76-.001-6.152-2.496-11.708-6.52-15.761zm13.294 224.478c2.948 2.919 2.948 7.682 0 10.602-2.92 2.919-7.682 2.919-10.602 0l-21.487-21.488c-10.8-10.8-16.186-25.001-16.186-39.204 0-14.201 5.386-28.431 16.186-39.204 10.432-10.432 24.463-16.186 39.204-16.186 14.202 0 28.404 5.386 39.204 16.186l7.229 7.229 7.228-7.229c10.772-10.8 25.002-16.186 39.204-16.186s28.403 5.386 39.204 16.186c10.403 10.404 16.186 24.463 16.186 39.204 0 14.203-5.414 28.432-16.186 39.204l-80.335 80.307c-2.92 2.948-7.682 2.948-10.602 0l-34.81-34.81c-2.948-2.919-2.948-7.653 0-10.602 2.92-2.919 7.682-2.919 10.602 0l29.509 29.509 75.034-75.034c7.597-7.597 11.792-17.83 11.792-28.574 0-10.374-3.941-20.749-11.792-28.602-7.88-7.852-18.227-11.792-28.602-11.792s-20.75 3.94-28.602 11.792l-12.53 12.529c-2.92 2.92-7.682 2.92-10.602 0l-12.529-12.529c-7.597-7.597-17.859-11.821-28.602-11.821-10.347 0-20.721 3.941-28.602 11.821-7.852 7.853-11.792 18.228-11.792 28.602 0 10.375 3.94 20.722 11.792 28.602zm-148.622 17.32v-78.181h-25.768v78.181zm202.169-190.093c-2.608 5.98-5.839 11.622-9.609 16.809h19.191c-3.743-5.188-6.974-10.829-9.582-16.809zm96.833 285.168h-193.694l15.137 52.952h163.419zm68.683-253.363c-110.353 0-220.707 0-331.062 0-5.924 0-11.338 2.438-15.25 6.378-3.94 3.911-6.378 9.325-6.378 15.251v195.11c0 5.953 2.438 11.339 6.378 15.28 3.912 3.911 9.326 6.35 15.25 6.35h331.062c5.953 0 11.367-2.438 15.279-6.35 3.913-3.941 6.35-9.327 6.35-15.28v-195.11c0-5.925-2.438-11.339-6.35-15.251-3.911-3.941-9.325-6.378-15.279-6.378z" fill="#f9f1f1" data-original="#000000" style="" class=""/></g></g></svg>
