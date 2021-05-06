@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512" height="512" x="0" y="0" viewBox="0 0 512.031 512.031" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><script id="metastreaminitscript">(function() {
+    document.getElementById('metastreaminitscript').remove()
+
+    const INIT_TIMEOUT = 5e3
+    const isFirefox = navigator.userAgent.toLowerCase().includes('firefox')
+
+    //=========================================================================
+    // document.createElement proxy
+    //=========================================================================
+
+    window.__metastreamMediaElements = new Set()
+
+    // Proxy document.createElement to trap media elements created in-memory
+    const origCreateElement = document.createElement
+    const proxyCreateElement = function() {
+      const element = origCreateElement.apply(document, arguments)
+      if (window.__metastreamMediaElements &amp;&amp; element instanceof HTMLMediaElement) {
+        window.__metastreamMediaElements.add(element)
+      }
+      return element
+    }
+    proxyCreateElement.toString = origCreateElement.toString.bind(origCreateElement)
+    document.createElement = proxyCreateElement
+
+    setTimeout(() =&gt; {
+      if (window.__metastreamMediaElements) {
+        window.__metastreamMediaElements.clear()
+        window.__metastreamMediaElements = undefined
+      }
+    }, INIT_TIMEOUT)
+
+    //=========================================================================
+    // navigator.mediaSession proxy (Firefox)
+    //=========================================================================
+
+    if (isFirefox) {
+      // stub out MediaSession API until Firefox supports this natively
+      if (!navigator.mediaSession) {
+        const noop = () =&gt; {}
+        const mediaSessionStub = {
+          __installedByMetastreamRemote__: true,
+          setActionHandler: noop
+        }
+        Object.defineProperty(window.navigator, 'mediaSession', {
+          value: mediaSessionStub,
+          enumerable: false,
+          writable: true
+        })
+
+        function MediaMetadata(metadata) {
+          Object.assign(this, metadata)
+        }
+        window.MediaMetadata = MediaMetadata
+      }
+
+      const { mediaSession } = navigator
+
+      // Capture action handlers for player.js proxy
+      mediaSession._handlers = {}
+
+      const _setActionHandler = mediaSession.setActionHandler
+      mediaSession.setActionHandler = function(name, handler) {
+        mediaSession._handlers[name] = handler
+        _setActionHandler.apply(mediaSession, arguments)
+      }
+    }
+
+    //=========================================================================
+    // document.domain fix (Firefox)
+    //=========================================================================
+
+    if (isFirefox) {
+      const domains = ['twitch.tv', 'crunchyroll.com']
+
+      // Fix for setting document.domain in sandboxed iframe
+      try {
+        const { domain } = document
+        if (domain &amp;&amp; domains.some(d =&gt; domain.includes(d))) {
+          Object.defineProperty(document, 'domain', {
+            value: domain,
+            writable: true
+          })
+        }
+      } catch (e) {}
+    }
+
+    //=========================================================================
+    // Inline script embed prevention fix
+    //=========================================================================
+
+    const observeScripts = () =&gt; {
+      const scriptSnippets = [
+        { code: 'window.top !== window.self', replacement: 'false' },
+        { code: 'self == top', replacement: 'true' },
+        { code: 'top.location != window.location', replacement: 'false' }
+      ]
+
+      const getAddedScripts = mutationList =&gt;
+        mutationList.reduce((scripts, mutation) =&gt; {
+          if (mutation.type !== 'childList') return scripts
+          const inlineScripts = Array.from(mutation.addedNodes).filter(
+            node =&gt; node instanceof HTMLScriptElement &amp;&amp; node.textContent.length &gt; 0
+          )
+          return inlineScripts.length &gt; 0 ? [...scripts, ...inlineScripts] : scripts
+        }, [])
+
+      // Modifies inline scripts to allow embedding content in iframe
+      const inlineScriptModifier = mutationsList =&gt; {
+        const scripts = getAddedScripts(mutationsList)
+        for (let script of scripts) {
+          for (let snippet of scriptSnippets) {
+            if (script.textContent.includes(snippet.code)) {
+              script.textContent = script.textContent.split(snippet.code).join(snippet.replacement)
+            }
+          }
+        }
+      }
+
+      const observer = new MutationObserver(inlineScriptModifier)
+      observer.observe(document.documentElement, { childList: true, subtree: true })
+
+      // Stop watching for changes after we finish loading
+      window.addEventListener('load', () =&gt; observer.disconnect())
+    }
+
+    observeScripts()
+  }());</script><path xmlns="http://www.w3.org/2000/svg" d="m443.086 117.08-4.207 8.057c-8.882 17.009-22.266 31.058-38.554 40.768l-24.4-114.883c-6.277-29.554-32.763-51.005-62.976-51.005-13.222 0-25.944 3.994-36.793 11.549l-20.141 14.026-20.141-14.026c-10.848-7.556-23.57-11.549-36.792-11.549-30.213 0-56.698 21.451-62.976 51.005l-24.4 114.882c-16.287-9.709-29.672-23.758-38.554-40.768l-4.207-8.057h-68.945v88.225c0 44.934 27.61 86.63 77.744 117.408 7.096 4.356 14.539 8.415 22.277 12.18 1.852 27.833 11.653 54.14 28.635 76.596 18.948 25.056 44.94 42.823 75.168 51.379l27.069 7.662-17.623 23.472 23.99 18.012 18.763-24.99 18.763 24.99 23.99-18.012-17.625-23.475 27.057-7.658c30.227-8.556 56.219-26.323 75.167-51.379 16.982-22.457 26.783-48.764 28.635-76.596 7.738-3.766 15.181-7.824 22.277-12.18 50.134-30.777 77.744-72.474 77.744-117.408v-88.225zm-62.667 99.498c-41.518 23.483-83.323 35.377-124.408 35.377-41.09-.001-82.891-11.895-124.398-35.376l7.193-33.866c38.932 20.418 78.062 30.633 117.205 30.633 39.134 0 78.28-10.219 117.215-30.634zm-214.967-159.323c3.353-15.783 17.496-27.238 33.63-27.238 7.061 0 13.855 2.132 19.648 6.167l37.285 25.966 37.285-25.966c5.793-4.035 12.588-6.167 19.648-6.167 16.134 0 30.277 11.455 33.63 27.238l20.146 94.85c-37.012 20.767-74.214 31.294-110.719 31.293-36.502-.001-73.697-10.528-110.7-31.293zm193.994 336.139c-14.976 19.803-35.52 33.846-59.409 40.608l-44.021 12.46-44.021-12.46c-23.89-6.762-44.434-20.805-59.409-40.608-10.26-13.566-17.202-28.911-20.56-45.213 37.49 13.109 79.921 20.085 123.991 20.085s86.5-6.977 123.991-20.085c-3.359 16.302-10.302 31.647-20.562 45.213zm122.585-188.089c0 34.11-22.53 66.727-63.439 91.841-43.193 26.517-100.931 41.12-162.576 41.12s-119.383-14.604-162.576-41.12c-40.91-25.115-63.44-57.731-63.44-91.841v-58.225h21.131c13.046 21.243 31.786 38.329 54.077 49.421l-7.399 34.837 9.098 5.525c49.263 29.919 99.428 45.091 149.104 45.092h.006c49.668 0 99.838-15.171 149.109-45.091l9.098-5.525-7.399-34.838c22.291-11.092 41.031-28.178 54.078-49.421h21.13v58.225z" fill="#a9377e" data-original="#000000" style="" class=""/></g></svg>
