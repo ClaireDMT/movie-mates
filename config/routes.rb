@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :movies, only: [:index, :show]
       resources :crews, only: [:index, :show]
       resources :genres, only: [:index]
+      resources :users, only: [:friends]
     end
   end
 
