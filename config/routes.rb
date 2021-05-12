@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
+  get 'current_user/index'
   root to: 'pages#home'
   # devise_for :users
 
+  get '/current_user', to: 'users/current_user#index'
   devise_for :users,
             controllers: {
-              sessions: 'sessions',
-              registrations: 'registrations'
+              sessions: 'users/sessions',
+              registrations: 'users/registrations'
             }
+
 
   namespace :api do
     namespace :v1 do
