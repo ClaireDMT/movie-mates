@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   root to: 'pages#home'
-  devise_for :users
+  # devise_for :users
+
+  devise_for :users,
+            controllers: {
+              sessions: 'sessions',
+              registrations: 'registrations'
+            }
 
   namespace :api do
     namespace :v1 do
