@@ -4,10 +4,11 @@ import Movie from './Movie/Movie';
 import Genres from './Genres/Genres';
 import Profile from './Profile/Profile';
 import Navbar from '../components/Navigation/Navbar';
+import SignIn from '../components/Devise/Registrations/SignIn';
 
 const App = () => {
   return (
-    <div className="container">
+    <div className="">
       <div className="d-flex justify-content-around align-items-center">
         <Link to="/users/sign_in">Login</Link>
         <Link to="/users/sign_up">Sign Up</Link>
@@ -18,10 +19,10 @@ const App = () => {
         <Route exact path="/movies/:id" component={Movie} />
         <Route exact path="/" component={Profile} />
         <Route exact path="/users/sign_in" component={SignIn} />
-        <Route exact path="/users/sign_in" component={SignUp} />
-        <Route exact path="/users/sign_out" component={SignOut} />
-
+        {/* <Route exact path="/users/sign_up" component={SignUp} />
+        <Route exact path="/users/sign_out" component={SignOut} /> */}
       </Switch>
+      <Navbar />
     </div>
   )
 };

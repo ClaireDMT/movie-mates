@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # devise_for :users
 
   get '/current_user', to: 'users/current_user#index'
+  get '/authorized?', to: 'users/sessions#show'
+
   devise_for :users,
             controllers: {
               sessions: 'users/sessions',
