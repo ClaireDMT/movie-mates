@@ -1,15 +1,13 @@
 Rails.application.routes.draw do
-  get 'current_user/index'
-  root to: 'pages#home'
-  # devise_for :users
+  root to: 'pages#app'
 
   get '/current_user', to: 'users/current_user#index'
   get '/authorized?', to: 'users/sessions#show'
 
   devise_for :users,
-            controllers: {
-              sessions: 'users/sessions',
-              registrations: 'users/registrations'
+  controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
             }
 
 

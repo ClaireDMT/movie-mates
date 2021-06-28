@@ -10,12 +10,15 @@ import PropTypes from 'prop-types'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./application.scss"
 import App from '../components/App'
+import { AuthContextProvider } from '../components/Store/auth-context';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Router>
-      <Route path="/" component={App}/>
-    </Router>,
+    <AuthContextProvider>
+      <Router>
+        <Route path="/" component={App} />
+      </Router>
+    </AuthContextProvider>,
     document.body.appendChild(document.createElement('div')),
   )
 })

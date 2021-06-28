@@ -1,13 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
+import AuthContext from '../../Store/auth-context';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 const SignIn = (props) => {
+  const history = useHistory();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
+  const authCtxt = useContext(AuthContext);
   // const [isLogin, setIsLogin] = useState(true);
 
   const submitHandler = (event) => {
@@ -16,12 +20,21 @@ const SignIn = (props) => {
       email: emailInputRef.current.value,
       password: passwordInputRef.current.value
     };
+
     axios.post('/users/sign_in', {
       user: userData
     }
-    ).then(resp => {
-      console.log(resp);
-    }).catch(error => {
+    )
+    .then(resp => {
+      if (resp.headers.authorization) {
+        authCtxt.login(resp.headers.authorization);
+        history.replace('/');
+
+      } else {
+        throw new Error(resp)
+      }
+    })
+    .catch(error => {
       console.log(error)
     });
   }

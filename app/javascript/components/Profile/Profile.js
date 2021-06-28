@@ -5,15 +5,15 @@ import Friend from './Friend';
 const Profile = () => {
   const [friends, setFriends] = useState([])
 
-  useEffect(() => {
-    //  get all genre from our API
-    //  update genres in the state
-    axios.get('api/v1/friends.json')
-      .then(resp => {
-        setFriends(resp.data.data)
-      })
-      .catch(resp => console.log(resp))
-  }, [friends.length])
+  // useEffect(() => {
+  //   //  get all genre from our API
+  //   //  update genres in the state
+  //   axios.get('api/v1/friends.json')
+  //     .then(resp => {
+  //       setFriends(resp.data.data)
+  //     })
+  //     .catch(resp => console.log(resp))
+  // }, [friends.length])
 
   const grid = friends.map(friend => (
     <Friend
@@ -22,6 +22,7 @@ const Profile = () => {
 
   return (
     <div>
+      Profile
       {grid}
     </div>
   );

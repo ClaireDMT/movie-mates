@@ -28,9 +28,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def token
-    request.headers['Authorization']
-  end
+  # def auth_header
+  #   request.headers['Authorization']
+  # end
 
   def user_id
     decoded_token.first['user_id']
