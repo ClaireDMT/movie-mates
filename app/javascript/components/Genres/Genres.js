@@ -1,14 +1,21 @@
-import React , { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useContext } from 'react';
 import axios from 'axios';
 import Genre from './Genre';
+import AuthContext from '../Store/auth-context';
 
 const Genres = () => {
   const [genres, setGenres] = useState([])
+  const authCtx = useContext(AuthContext);
+
 
   useEffect(() => {
     //  get all genre from our API
     //  update genres in the state
-    axios.get('api/v1/genres.json')
+    axios.get('api/v1/genres.json', {
+      headers: {
+        'Authorization': authCtx.token
+      }
+    })
     .then( resp => {
       setGenres(resp.data.data)
     })

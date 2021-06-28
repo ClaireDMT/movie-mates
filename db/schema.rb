@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_30_154926) do
+ActiveRecord::Schema.define(version: 2021_05_12_132735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,12 +27,29 @@ ActiveRecord::Schema.define(version: 2021_04_30_154926) do
     t.index ["tmdb_id"], name: "index_crews_on_tmdb_id"
   end
 
+  create_table "friendships", id: :serial, force: :cascade do |t|
+    t.string "friendable_type"
+    t.integer "friendable_id"
+    t.integer "friend_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer "blocker_id"
+    t.integer "status"
+    t.index ["friendable_id", "friend_id"], name: "index_friendships_on_friendable_id_and_friend_id", unique: true
+  end
+
   create_table "genres", force: :cascade do |t|
     t.string "name"
     t.integer "tmdb_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "icon"
+  end
+
+  create_table "jwt_denylist", force: :cascade do |t|
+    t.string "jti", null: false
+    t.datetime "exp", null: false
+    t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
   create_table "moods", force: :cascade do |t|
@@ -79,6 +96,36 @@ ActiveRecord::Schema.define(version: 2021_04_30_154926) do
     t.index ["year"], name: "index_movies_on_year"
   end
 
+  create_table "screening_genres", force: :cascade do |t|
+    t.bigint "genre_id", null: false
+    t.bigint "screening_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["genre_id"], name: "index_screening_genres_on_genre_id"
+    t.index ["screening_id"], name: "index_screening_genres_on_screening_id"
+  end
+
+  create_table "screening_movies", force: :cascade do |t|
+    t.bigint "movie_id", null: false
+    t.bigint "screening_id", null: false
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["movie_id"], name: "index_screening_movies_on_movie_id"
+    t.index ["screening_id"], name: "index_screening_movies_on_screening_id"
+  end
+
+  create_table "screenings", force: :cascade do |t|
+    t.bigint "user1_id", null: false
+    t.bigint "user2_id", null: false
+    t.bigint "user3_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user1_id"], name: "index_screenings_on_user1_id"
+    t.index ["user2_id"], name: "index_screenings_on_user2_id"
+    t.index ["user3_id"], name: "index_screenings_on_user3_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -99,4 +146,11 @@ ActiveRecord::Schema.define(version: 2021_04_30_154926) do
   add_foreign_key "movie_crews", "movies"
   add_foreign_key "movie_genres", "genres"
   add_foreign_key "movie_genres", "movies"
+  add_foreign_key "screening_genres", "genres"
+  add_foreign_key "screening_genres", "screenings"
+  add_foreign_key "screening_movies", "movies"
+  add_foreign_key "screening_movies", "screenings"
+  add_foreign_key "screenings", "users", column: "user1_id"
+  add_foreign_key "screenings", "users", column: "user2_id"
+  add_foreign_key "screenings", "users", column: "user3_id"
 end

@@ -37,6 +37,9 @@ gem 'bootstrap'
 gem 'font-awesome-sass'
 gem 'autoprefixer-rails'
 gem 'react-rails'
+gem 'has_friendship', github: 'sungwoncho/has_friendship'
+gem 'devise-jwt'
+gem 'rack-cors'
 
 group :development, :test do
   gem 'pry-byebug'
