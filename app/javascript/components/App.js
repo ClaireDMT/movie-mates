@@ -1,12 +1,15 @@
 import React, { useContext, Fragment } from 'react';
 import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
+
+//  IMPORT COMPONENTS
+import AuthContext from './Store/auth-context';
+import Home from './Home/Home';
 import Movie from './Movie/Movie';
 import Genres from './Genres/Genres';
 import Profile from './Profile/Profile';
 import Navbar from '../components/Navigation/Navbar';
 import SignIn from '../components/Devise/Registrations/SignIn';
-import AuthContext from './Store/auth-context';
-import axios from 'axios';
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -28,14 +31,10 @@ const App = () => {
   }
 
   return (
-    <div className="">
-      {isLoggedIn}
+      <div className="">
       <div className="d-flex justify-content-around align-items-center">
         {!isLoggedIn &&
-          <Fragment>
-            <Link to="/users/sign_in">Login</Link>
-            {/* <Link to="/users/sign_up">Sign Up</Link> */}
-          </Fragment>
+          <Link to="/users/sign_in">Login</Link>
         }
         {isLoggedIn &&
           <button onClick={logoutHandler}>Sign Out</button>
@@ -62,6 +61,7 @@ const App = () => {
         </Route>
 
       </Switch>
+      <Home></Home>
       <Navbar />
     </div>
   )

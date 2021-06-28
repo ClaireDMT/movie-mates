@@ -14,7 +14,7 @@ const Navbar = () => {
       <Link to="/genres">
         <img src={popCorn} alt="" />
       </Link>
-      <Link to="/users/sign_in">
+      <Link to="/movies">
         <img src={watchList} alt="" />
       </Link>
     </nav>

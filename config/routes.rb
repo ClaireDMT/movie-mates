@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
   root to: 'pages#app'
 
-  get '/current_user', to: 'users/current_user#index'
-  get '/authorized?', to: 'users/sessions#show'
-
+  # get '/current_user', to: 'users/current_user#index'
   devise_for :users,
   controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
-            }
+  }
 
 
   namespace :api do
@@ -16,7 +14,7 @@ Rails.application.routes.draw do
       resources :movies, only: [:index, :show]
       resources :crews, only: [:index, :show]
       resources :genres, only: [:index]
-      resources :users, only: [:friends]
+      get '/friends', to: 'users#friends'
     end
   end
 
