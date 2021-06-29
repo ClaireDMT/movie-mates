@@ -10,6 +10,7 @@ import Genres from './Genres/Genres';
 import Profile from './Profile/Profile';
 import Navbar from '../components/Navigation/Navbar';
 import SignIn from '../components/Devise/Registrations/SignIn';
+import Container from 'react-bootstrap/Container';
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -31,7 +32,7 @@ const App = () => {
   }
 
   return (
-      <div className="">
+    <Fragment>
       <div className="d-flex justify-content-around align-items-center">
         {!isLoggedIn &&
           <Link to="/users/sign_in">Login</Link>
@@ -40,18 +41,18 @@ const App = () => {
           <button onClick={logoutHandler}>Sign Out</button>
         }
       </div>
-
-      <Switch>
+      <Container>
+        <Switch>
         {isLoggedIn &&
-          <Fragment>
-            <Route path="/genres" component={Genres}/>
-            <Route path="/movies/:id" component={Movie} />
-          </Fragment>
+          <Route path="/genres" component={Genres}/>
+          }
+        {isLoggedIn &&
+          <Route path="/movies/:id" component={Movie} />
         }
 
         <Route path="/" exact >
           {isLoggedIn && <Profile /> }
-          {!isLoggedIn && <Redirect to='/'/>}
+          {!isLoggedIn && < Home />}
         </Route>
 
         <Route path="/users/sign_in" component={SignIn} />
@@ -61,9 +62,9 @@ const App = () => {
         </Route>
 
       </Switch>
-      <Home></Home>
+      </Container>
       <Navbar />
-    </div>
+    </Fragment>
   )
 };
 

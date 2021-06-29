@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_12_132735) do
+ActiveRecord::Schema.define(version: 2021_06_29_073751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,7 +118,7 @@ ActiveRecord::Schema.define(version: 2021_05_12_132735) do
   create_table "screenings", force: :cascade do |t|
     t.bigint "user1_id", null: false
     t.bigint "user2_id", null: false
-    t.bigint "user3_id", null: false
+    t.bigint "user3_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user1_id"], name: "index_screenings_on_user1_id"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 2021_05_12_132735) do
     t.boolean "boolean", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "picture"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

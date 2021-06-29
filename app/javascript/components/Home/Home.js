@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <div>
       <h1>Movie Mates</h1>
-      {authCtx.isLoggedIn && <Profile />}
+      <p>Please login!</p>
     </div>
   );
 };

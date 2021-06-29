@@ -1,12 +1,22 @@
 import React from 'react';
+import { Link } from "react-router-dom";
+
+import Image from 'react-bootstrap/Image';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 const Friend = (props) => {
+
+  const createScreening = (friend) => {
+
+  }
+
   return (
-    <div className="friend__card">
-      <div className="friend__pic">
-      </div>
-      <div className="friend__name">{props.attributes.first_name} </div>
-    </div>
+    <Card bg="primary" text="dark" className="friend__card">
+      <Button onClick={() => createScreening(props.attributes.id)} variant="light">Watch with</Button>
+      <Card.Title>{props.attributes.first_name}</Card.Title>
+      <Card.Img src={props.attributes.picture} className="avatar-large" />
+    </Card>
   );
 };
 
