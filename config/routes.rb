@@ -14,7 +14,8 @@ Rails.application.routes.draw do
       resources :movies, only: [:index, :show]
       resources :crews, only: [:index, :show]
       resources :genres, only: [:index]
-      resources :screenings, only: [:create]
+      resources :screenings, only: [:create] do
+      end
       get '/friends', to: 'users#friends'
     end
   end

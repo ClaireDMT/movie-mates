@@ -49,6 +49,9 @@ const App = () => {
         {isLoggedIn &&
           <Route path="/movies/:id" component={Movie} />
         }
+        {isLoggedIn &&
+          <Route path="/screenings/:id" component={Genres} />
+        }
 
         <Route path="/" exact >
           {isLoggedIn && <Profile /> }

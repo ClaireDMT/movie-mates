@@ -2,8 +2,10 @@ import React from 'react';
 import logo from '../../images/genres/western5_pink.svg';
 
 const Genre = (props) => {
+  const isSelected = props.selected ? "selected" : "";
+  const cardClass = "genre__card " + isSelected;
   return (
-    <div className="genre__card">
+    <div className={cardClass} onClick={props.onClick}>
       <div className="genre__logo">
         <img src={logo} alt="wait"/>
       </div>

@@ -1,14 +1,35 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useContext } from 'react';
+import { Link, useHistory } from "react-router-dom";
+
+import axios from 'axios';
+import AuthContext from '../Store/auth-context';
 
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
 const Friend = (props) => {
+  const history = useHistory();
+  const authCtxt = useContext(AuthContext);
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': authCtxt.token
+  }
 
-  const createScreening = (friend) => {
-
+  const createScreening = (friendId) => {
+    axios.post('api/v1/screenings.json',
+      {
+        "screening": {
+          "user2_id": friendId
+        }
+      }, {
+      headers: headers
+    })
+      .then(resp => {
+        console.log(resp.data.data)
+        history.replace(`screenings/${resp.data.data.id}`)
+      })
+      .catch(resp => console.log(resp))
   }
 
   return (

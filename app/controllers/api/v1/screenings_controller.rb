@@ -7,7 +7,7 @@ module Api
         if @screening.save
           render json: ScreeningSerializer.new(@screening).serializable_hash.to_json
         else
-          render_error
+          render json: {}, status: 401
         end
       end
 
