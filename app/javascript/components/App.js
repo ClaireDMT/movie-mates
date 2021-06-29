@@ -1,12 +1,16 @@
 import React, { useContext, Fragment } from 'react';
 import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
+
+//  IMPORT COMPONENTS
+import AuthContext from './Store/auth-context';
+import Home from './Home/Home';
 import Movie from './Movie/Movie';
 import Genres from './Genres/Genres';
 import Profile from './Profile/Profile';
 import Navbar from '../components/Navigation/Navbar';
 import SignIn from '../components/Devise/Registrations/SignIn';
-import AuthContext from './Store/auth-context';
-import axios from 'axios';
+import Container from 'react-bootstrap/Container';
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -28,31 +32,30 @@ const App = () => {
   }
 
   return (
-    <div className="">
-      {isLoggedIn}
+    <Fragment>
       <div className="d-flex justify-content-around align-items-center">
         {!isLoggedIn &&
-          <Fragment>
-            <Link to="/users/sign_in">Login</Link>
-            {/* <Link to="/users/sign_up">Sign Up</Link> */}
-          </Fragment>
+          <Link to="/users/sign_in">Login</Link>
         }
         {isLoggedIn &&
           <button onClick={logoutHandler}>Sign Out</button>
         }
       </div>
-
-      <Switch>
+      <Container>
+        <Switch>
         {isLoggedIn &&
-          <Fragment>
-            <Route path="/genres" component={Genres}/>
-            <Route path="/movies/:id" component={Movie} />
-          </Fragment>
+          <Route path="/genres" component={Genres}/>
+          }
+        {isLoggedIn &&
+          <Route path="/movies/:id" component={Movie} />
+        }
+        {isLoggedIn &&
+          <Route path="/screenings/:id" component={Genres} />
         }
 
         <Route path="/" exact >
           {isLoggedIn && <Profile /> }
-          {!isLoggedIn && <Redirect to='/'/>}
+          {!isLoggedIn && < Home />}
         </Route>
 
         <Route path="/users/sign_in" component={SignIn} />
@@ -62,8 +65,9 @@ const App = () => {
         </Route>
 
       </Switch>
+      </Container>
       <Navbar />
-    </div>
+    </Fragment>
   )
 };
 

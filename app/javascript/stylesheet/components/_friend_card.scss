@@ -1,0 +1,13 @@
+.friend__card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  .card-title {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    color: white;
+  }
+}
