@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :crews, only: [:index, :show]
       resources :genres, only: [:index]
       resources :screenings, only: [:create] do
+        resources :screening_genres, only: [:create]
       end
       get '/friends', to: 'users#friends'
     end

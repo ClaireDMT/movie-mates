@@ -23,6 +23,11 @@ body {
   font-family: $body-font;
 }
 
+.main-container {
+  margin-bottom: 80px;
+  text-align: center;
+}
+
 h1, h2 {
   color: $white;
   font-family: $headers-font;

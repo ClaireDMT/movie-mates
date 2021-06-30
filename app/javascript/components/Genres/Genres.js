@@ -1,21 +1,26 @@
 import React, { useState, useEffect, Fragment, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Genre from './Genre';
 import AuthContext from '../Store/auth-context';
+import Genre from './Genre';
+import Button from 'react-bootstrap/Button';
 
 const Genres = () => {
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([])
+  const params = useParams();
 
   const authCtx = useContext(AuthContext);
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': authCtx.token
+  }
 
   useEffect(() => {
     //  get all genre from our API
     //  update genres in the state
     axios.get('/api/v1/genres.json', {
-      headers: {
-        'Authorization': authCtx.token
-      }
+      headers: headers
     })
     .then( resp => {
       setGenres(resp.data.data)
@@ -34,7 +39,18 @@ const Genres = () => {
     }
   }
 
-
+  const createScreeningGenres = () => {
+    axios.post(`/api/v1/screenings/${params.id}/screening_genres.json`,
+      {
+        "screening_genre": selectedGenres
+      }, {
+      headers: headers
+      })
+      .then(resp => {
+        console.log(resp)
+      })
+      .catch(resp => console.log(resp))
+  }
 
   const grid = genres.map( genre => {
     const selected = selectedGenres.includes(genre.id)
@@ -48,10 +64,15 @@ const Genres = () => {
   })
   return (
     <Fragment>
-      <h1>What do you<br />want to watch?</h1>
+      <h1 className="mb-2">What do you<br />want to watch?</h1>
+      <Button
+        onClick={createScreeningGenres}
+        className="btn-submit-genres"
+        variant="primary">done!</Button>
       <div className="genres__list">
         {grid}
       </div>
+
     </Fragment>
   );
 };
