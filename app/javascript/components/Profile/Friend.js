@@ -10,11 +10,7 @@ import Button from 'react-bootstrap/Button';
 
 const Friend = (props) => {
   const history = useHistory();
-  const authCtxt = useContext(AuthContext);
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': authCtxt.token
-  }
+  const authCtx = useContext(AuthContext);
 
   const createScreening = (friendId) => {
     axios.post('api/v1/screenings.json',
@@ -23,11 +19,11 @@ const Friend = (props) => {
           "user2_id": friendId
         }
       }, {
-      headers: headers
+        headers: authCtx.headers
     })
       .then(resp => {
         console.log(resp.data.data)
-        history.replace(`screenings/${resp.data.data.id}`)
+        history.push(`/screenings/${resp.data.data.id}`)
       })
       .catch(resp => console.log(resp))
   }

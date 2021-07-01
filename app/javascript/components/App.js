@@ -5,7 +5,7 @@ import axios from 'axios';
 //  IMPORT COMPONENTS
 import AuthContext from './Store/auth-context';
 import Home from './Home/Home';
-import Movie from './Movie/Movie';
+import Movies from './Movie/Movies';
 import Genres from './Genres/Genres';
 import Profile from './Profile/Profile';
 import Navbar from '../components/Navigation/Navbar';
@@ -18,9 +18,7 @@ const App = () => {
 
   const logoutHandler = () => {
     axios.delete('/users/sign_out', {
-      headers: {
-        'Authorization': authCtx.token
-      }
+      headers: authCtx.headers
     })
       .then(resp => {
         console.log(resp);
@@ -47,7 +45,7 @@ const App = () => {
           <Route path="/genres" component={Genres}/>
           }
         {isLoggedIn &&
-          <Route path="/movies/:id" component={Movie} />
+          <Route path="/screenings/:id/movies" component={Movies} />
         }
         {isLoggedIn &&
           <Route path="/screenings/:id" component={Genres} />

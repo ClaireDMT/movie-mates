@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../Store/auth-context';
 import Genre from './Genre';
@@ -9,18 +9,14 @@ const Genres = () => {
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([])
   const params = useParams();
-
+  const history = useHistory();
   const authCtx = useContext(AuthContext);
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': authCtx.token
-  }
 
   useEffect(() => {
     //  get all genre from our API
     //  update genres in the state
     axios.get('/api/v1/genres.json', {
-      headers: headers
+      headers: authCtx.headers
     })
     .then( resp => {
       setGenres(resp.data.data)
@@ -44,11 +40,11 @@ const Genres = () => {
       {
         "screening_genre": selectedGenres
       }, {
-      headers: headers
+        headers: authCtx.headers
       })
       .then(resp => {
         console.log(resp);
-        history.replace(`screenings/${params.id}/movies`)
+        history.push(`/screenings/${params.id}/movies`)
       })
       .catch(resp => console.log(resp))
   }
