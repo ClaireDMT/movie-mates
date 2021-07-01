@@ -10,14 +10,14 @@ This is a Rails 6 app created using [rails-template][]. Please check README of t
 ## Load Data from TMDB API
 
 #### Load Genres (only 19)
-`GenresJob.new.perform`
+In your rails console: `GenresJob.new.perform`
 
 #### Load Movies from specific year and their cast
 1. Launch Sidekiq to get a worker
 `bundle exec sidekiq`
 
-2. Launch Sidekiq to get a worker
-`MoviesJob.new.perform_later(year)`
+2. Start the job
+In your rails console: `MoviesJob.new.perform_later(year)`
 
 [TMDB API]: https://www.themoviedb.org/documentation/api
 [heroku]: https://www.heroku.com/
