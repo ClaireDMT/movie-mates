@@ -41,7 +41,7 @@ const App = () => {
           <button onClick={logoutHandler}>Sign Out</button>
         }
       </div>
-      <Container>
+      <Container className="main-container">
         <Switch>
         {isLoggedIn &&
           <Route path="/genres" component={Genres}/>
