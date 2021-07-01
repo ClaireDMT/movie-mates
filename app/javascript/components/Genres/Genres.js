@@ -47,7 +47,8 @@ const Genres = () => {
       headers: headers
       })
       .then(resp => {
-        console.log(resp)
+        console.log(resp);
+        history.replace(`screenings/${params.id}/movies`)
       })
       .catch(resp => console.log(resp))
   }

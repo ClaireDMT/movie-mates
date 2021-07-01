@@ -11,11 +11,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :movies, only: [:index, :show]
       resources :crews, only: [:index, :show]
       resources :genres, only: [:index]
       resources :screenings, only: [:create] do
         resources :screening_genres, only: [:create]
+        resources :movies, only: [:index, :show]
       end
       get '/friends', to: 'users#friends'
     end
