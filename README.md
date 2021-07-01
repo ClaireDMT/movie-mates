@@ -7,9 +7,18 @@ This is a Rails 6 app created using [rails-template][]. Please check README of t
 * We advise you to use a process manager to launch your processes in development, like [overmind][] or [foreman][].
 * We advise you to deploy to [Heroku][]. Do not forget to add the [Redis] add-on.
 
-[article]: https://evilmartians.com/chronicles/rails-5-2-active-storage-and-beyond
-[here]: http://nvie.com/posts/a-successful-git-branching-model/
-[overmind]: https://github.com/DarthSim/overmind
-[foreman]: https://github.com/ddollar/foreman
+## Load Data from TMDB API
+
+#### Load Genres (only 19)
+`GenresJob.new.perform`
+
+#### Load Movies from specific year and their cast
+1. Launch Sidekiq to get a worker
+`bundle exec sidekiq`
+
+2. Launch Sidekiq to get a worker
+`MoviesJob.new.perform_later(year)`
+
+[TMDB API]: https://www.themoviedb.org/documentation/api
 [heroku]: https://www.heroku.com/
 [redis]: https://devcenter.heroku.com/articles/heroku-redis
