@@ -17,7 +17,7 @@ In your rails console: `rails genre:fetch_all`
 `bundle exec sidekiq`
 
 2. Start the job
-In your rails console: `Mrails movie:fetch_from_year[year]`
+In your rails console: `Mrails movie:fetch_from_year\[year\]`
 
 [TMDB API]: https://www.themoviedb.org/documentation/api
 [heroku]: https://www.heroku.com/
