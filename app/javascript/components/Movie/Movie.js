@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 const Movie = (props) => {
   return (
     <Card bg="primary" text="dark" className="movie__card">
-      <Card.Img src={props.attributes.picture} className="avatar-large" />
+      <Card.Img src={props.attributes.poster_url} className="" />
       <Card.Title>{props.attributes.en_title}</Card.Title>
     </Card>
   );

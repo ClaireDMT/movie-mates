@@ -22,9 +22,9 @@ Rails.application.routes.draw do
   end
 
   require "sidekiq/web"
-  authenticate :user, ->(user) { user.admin? } do
+  # authenticate :user, ->(user) { user.admin? } do
     mount Sidekiq::Web => '/sidekiq'
-  end
+  # end
 
   get '*path', to: 'pages#app', via: :all
 
