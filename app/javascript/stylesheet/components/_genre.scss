@@ -1,5 +1,5 @@
 .genre__card {
-  border: 3px solid $pink;
+  border: 3px solid $main;
   height: 100px;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
 }
 
 .genre__card.selected {
-  background-color: $pink;
+  background-color: $main;
 }
 
 .genre__name {

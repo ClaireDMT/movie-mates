@@ -11,20 +11,20 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :movies, only: [:index, :show]
       resources :crews, only: [:index, :show]
       resources :genres, only: [:index]
       resources :screenings, only: [:create] do
         resources :screening_genres, only: [:create]
+        resources :movies, only: [:index, :show]
       end
       get '/friends', to: 'users#friends'
     end
   end
 
   require "sidekiq/web"
-  authenticate :user, ->(user) { user.admin? } do
+  # authenticate :user, ->(user) { user.admin? } do
     mount Sidekiq::Web => '/sidekiq'
-  end
+  # end
 
   get '*path', to: 'pages#app', via: :all
 

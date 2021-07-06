@@ -13,9 +13,7 @@ const Profile = () => {
     //  get all genre from our API
     //  update genres in the state
     axios.get('api/v1/friends.json', {
-      headers: {
-        'Authorization': authCtx.token
-      }
+      headers: authCtx.headers
     })
       .then(resp => {
         console.log(resp);
