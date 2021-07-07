@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../Store/auth-context';
@@ -38,10 +38,12 @@ const Movies = () => {
   }
 
   return (
-    <div className="movies__list">
-      {list}
+    < Fragment>
       <SwipeButtons />
-    </div>
+      <div className="movies__list">
+        {list}
+      </div>
+    </Fragment>
   );
 };
 

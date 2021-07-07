@@ -1,5 +1,14 @@
 .swipe-buttons {
   display: flex;
-  position: fixed;
-  bottom: 10vh;
+  align-items: center;
+  width: 50vw;
+  margin: 16px auto;
+  .MuiIconButton-root {
+    color: white;
+    background-color: $light-black;
+  }
+
+  .btn__thumb__up, .btn__thumb__down {
+    display: block;
+  }
 }

@@ -1,15 +1,14 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import home from '../../images/home.svg';
-import watchList from '../../images/watch-list-5.svg';
-import popCorn from '../../images/popcorn.svg';
-
+import friends from '../../images/friends.png';
+import watchList from '../../images/movie_blue.png';
+import popCorn from '../../images/popcorn_blue.png';
 
 const Navbar = () => {
   return (
     <nav className="d-flex justify-content-around align-items-center">
       <Link to="/">
-        <img src={home} alt=""/>
+        <img src={friends} alt=""/>
       </Link>
       <Link to="/genres">
         <img src={popCorn} alt="" />

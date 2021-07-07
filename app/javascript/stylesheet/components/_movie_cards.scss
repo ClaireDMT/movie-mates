@@ -1,14 +1,15 @@
 .movies__list {
   display: flex;
   justify-content: center;
-  margin-top: 5vh;
   border-radius: 16px;
 }
 
 .movie__card {
   position: absolute;
-  background-color: black;
+  background-color: $light-black;
   width: 90%;
+  border-radius: 16px;
+
   .card-title {
     color: white;
     margin-top: 8px

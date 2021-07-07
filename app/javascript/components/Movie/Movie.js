@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
-import { TinderCard } from 'react-tinder-card';
+import TinderCard from 'react-tinder-card';
 
 const Movie = (props) => {
 
