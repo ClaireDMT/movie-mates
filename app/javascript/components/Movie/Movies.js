@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../Store/auth-context';
 import Movie from './Movie';
+import SwipeButtons from './SwipeButtons';
 
 const Movies = () => {
   const params = useParams();
@@ -15,7 +16,6 @@ const Movies = () => {
       headers: authCtx.headers
     })
       .then(resp => {
-        console.log(resp);
         setMovies(resp.data.data)
       })
       .catch(resp => console.log(resp))
@@ -29,12 +29,18 @@ const Movies = () => {
       />)
   })
 
+  const onSwipe = (direction) => {
+    console.log('You swiped: ' + direction)
+  }
+
+  const onCardLeftScreen = (myIdentifier) => {
+    console.log(myIdentifier + ' left the screen')
+  }
+
   return (
-    <div>
-      <h1>MovieSSS page</h1>
-      <div className="movies__list">
-        {list}
-      </div>
+    <div className="movies__list">
+      {list}
+      <SwipeButtons />
     </div>
   );
 };

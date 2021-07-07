@@ -1,13 +1,23 @@
 import React from 'react';
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
+import { TinderCard } from 'react-tinder-card';
 
 const Movie = (props) => {
+
   return (
-    <Card bg="primary" text="dark" className="movie__card">
-      <Card.Img src={props.attributes.poster_url} className="" />
-      <Card.Title>{props.attributes.en_title}</Card.Title>
-    </Card>
+    <TinderCard
+      className="movie__card"
+      bg="primary" text="dark"
+      // onSwipe={onSwipe}
+      // onCardLeftScreen={() => onCardLeftScreen('fooBar')}
+      // preventSwipe={['right', 'left']}
+      >
+      <div>
+        <Card.Img src={props.attributes.poster_url} className="" />
+        <Card.Title>{props.attributes.en_title}</Card.Title>
+      </div>
+    </TinderCard>
   );
 };
 
