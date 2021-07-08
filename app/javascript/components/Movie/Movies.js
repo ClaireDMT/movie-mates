@@ -11,31 +11,55 @@ const Movies = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    console.log(params);
     axios.get(`/api/v1/screenings/${params.id}/movies.json`, {
       headers: authCtx.headers
     })
       .then(resp => {
-        setMovies(resp.data.data)
+        setMovies(resp.data.data);
       })
       .catch(resp => console.log(resp))
   }, [movies.length])
+
+  const handleSwipe = (dir, movieId) => {
+    switch (dir) {
+      case 'toleft':
+        addToFavoriteMovies(movieId, "to watch");
+      case 'toright':
+        addToScreeningMovies(movieId);
+      case 'toup':
+        addToFavoriteMovies(movieId, "liked!");
+      case 'todown':
+        addToFavoriteMovies(movieId, "disliked!");
+      default:
+        console.log('Sorry, you don\'t know how to swipe');
+    }
+  }
+
+  const addToScreeningMovies = (movieId) => {
+    axios.post(`/api/v1/screenings/${params.id}/screening_movies.json`,
+    {
+      "movie_id": movieId
+    },
+    {
+      headers: authCtx.headers
+    })
+      .then(resp => {
+        setMovies(resp.data.data);
+      })
+      .catch(resp => console.log(resp))
+  }
 
   const list = movies.map(movie => {
     return (
       <Movie
         key={movie.id}
+        movieId={movie.id}
         attributes={movie.attributes}
+        swiped={handleSwipe}
       />)
   })
 
-  const onSwipe = (direction) => {
-    console.log('You swiped: ' + direction)
-  }
 
-  const onCardLeftScreen = (myIdentifier) => {
-    console.log(myIdentifier + ' left the screen')
-  }
 
   return (
     < Fragment>

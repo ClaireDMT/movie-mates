@@ -9,9 +9,7 @@ const Movie = (props) => {
     <TinderCard
       className="movie__card"
       bg="primary" text="dark"
-      // onSwipe={onSwipe}
-      // onCardLeftScreen={() => onCardLeftScreen('fooBar')}
-      // preventSwipe={['right', 'left']}
+      onSwipe={(dir) => props.swiped(dir, props.movieId)}
       >
       <div>
         <Card.Img src={props.attributes.poster_url} className="" />
