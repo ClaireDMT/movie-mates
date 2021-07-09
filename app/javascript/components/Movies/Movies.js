@@ -21,18 +21,26 @@ const Movies = () => {
   }, [movies.length])
 
   const handleSwipe = (dir, movieId) => {
+    console.log(dir);
     switch (dir) {
-      case 'toleft':
+      case 'left':
         addToFavoriteMovies(movieId, "to watch");
-      case 'toright':
+        break;
+      case 'right':
         addToScreeningMovies(movieId);
-      case 'toup':
+        break;
+      case 'up':
         addToFavoriteMovies(movieId, "liked!");
-      case 'todown':
+        break;
+      case 'down':
         addToFavoriteMovies(movieId, "disliked!");
+        break;
       default:
         console.log('Sorry, you don\'t know how to swipe');
     }
+  }
+  const addToFavoriteMovies = (movieId) => {
+
   }
 
   const addToScreeningMovies = (movieId) => {
@@ -44,7 +52,8 @@ const Movies = () => {
       headers: authCtx.headers
     })
       .then(resp => {
-        setMovies(resp.data.data);
+        console.log(resp)
+        // setMovies(resp.data.data);
       })
       .catch(resp => console.log(resp))
   }
