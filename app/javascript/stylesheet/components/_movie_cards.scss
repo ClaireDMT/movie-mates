@@ -1,0 +1,20 @@
+.movies__list {
+  display: flex;
+  justify-content: center;
+  border-radius: 16px;
+}
+
+.movie__card {
+  position: absolute;
+  background-color: $light-black;
+  width: 90%;
+  border-radius: 16px;
+
+  .card-title {
+    color: white;
+    margin-top: 8px
+  }
+  .card-img {
+    border-radius: 16px;
+  }
+}

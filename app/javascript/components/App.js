@@ -5,9 +5,10 @@ import axios from 'axios';
 //  IMPORT COMPONENTS
 import AuthContext from './Store/auth-context';
 import Home from './Home/Home';
-import Movies from './Movie/Movies';
+import Movies from './Movies/Movies';
 import Genres from './Genres/Genres';
 import Profile from './Profile/Profile';
+import WatchList from './WatchList/WatchList';
 import Navbar from '../components/Navigation/Navbar';
 import SignIn from '../components/Devise/Registrations/SignIn';
 import Container from 'react-bootstrap/Container';
@@ -48,8 +49,12 @@ const App = () => {
           <Route path="/screenings/:id/movies" component={Movies} />
         }
         {isLoggedIn &&
+          <Route path="/watch_list" component={WatchList} />
+        }
+        {isLoggedIn &&
           <Route path="/screenings/:id" component={Genres} />
         }
+
 
         <Route path="/" exact >
           {isLoggedIn && <Profile /> }

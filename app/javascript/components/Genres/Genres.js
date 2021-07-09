@@ -43,7 +43,6 @@ const Genres = () => {
         headers: authCtx.headers
       })
       .then(resp => {
-        console.log(resp);
         history.push(`/screenings/${params.id}/movies`)
       })
       .catch(resp => console.log(resp))

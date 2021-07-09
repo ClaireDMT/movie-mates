@@ -22,7 +22,6 @@ const Friend = (props) => {
         headers: authCtx.headers
     })
       .then(resp => {
-        console.log(resp.data.data)
         history.push(`/screenings/${resp.data.data.id}`)
       })
       .catch(resp => console.log(resp))

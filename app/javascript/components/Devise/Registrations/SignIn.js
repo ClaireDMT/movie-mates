@@ -28,6 +28,7 @@ const SignIn = (props) => {
     .then(resp => {
       if (resp.headers.authorization) {
         authCtxt.login(resp.headers.authorization);
+        console.log(resp.headers.authorization);
         history.replace('/');
 
       } else {

@@ -6,6 +6,7 @@ class User < ApplicationRecord
          :jwt_authenticatable,
          jwt_revocation_strategy: JwtDenylist
   has_many :screenings
+  has_many :user_movies
   has_friendship
 
   def jwt_payload
