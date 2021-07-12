@@ -9,7 +9,7 @@ module Api
           render json: @screening_movie
         else
           @screening_movie = ScreeningMovie.new(movie: @movie, screening: @screening, status: 0)
-          render json: @screening_movie.save ?  @screening_movie : @screening_movies.errors.messages.to_json
+          render json: @screening_movie.save ? @screening_movie : @screening_movies.errors.messages.to_json
         end
       end
 
@@ -21,7 +21,7 @@ module Api
       end
 
       def update_status
-        @screening_movie.status =  match? ? 2 : 1
+        @screening_movie.status = match? ? 2 : 1
         @screening_movie.save
       end
 

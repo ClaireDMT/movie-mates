@@ -1,13 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :json
 
-  # def create
-  #   build_resource(sign_up_params)
-
-  #   resource.save
-  #   render_resource(resource)
-  # end
-
   def new
     render(status: :bad_request) && return if User.exists?(email: sign_up_params['email'])
 
@@ -16,14 +9,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     render_resource(resource)
   end
 
-  # POST /resource
-  # def create
-  #   render(status: :bad_request) && return if User.exists?(email: sign_up_params['email'])
-
-  #   build_resource(sign_up_params)
-  #   resource.save
-  #   render_resource(resource)
-  # end
   def create
     user = User.new(user_params)
     if user.save
@@ -51,5 +36,3 @@ class Users::RegistrationsController < Devise::RegistrationsController
     render json: { message: "Something went wrong." }
   end
 end
-
-

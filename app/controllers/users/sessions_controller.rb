@@ -11,19 +11,19 @@ class Users::SessionsController < Devise::SessionsController
   #   end
   # end
 
-  def show
-    if logged_in?
-      render json: { valid: "true", user: {id: current_user.id } }
-    else
-      render json: { valid: "false", errorMessages: {session: "Please login to continue"}}
-    end
-  end
+  # def show
+  #   if logged_in?
+  #     render json: { valid: "true", user: {id: current_user.id } }
+  #   else
+  #     render json: { valid: "false", errorMessages: {session: "Please login to continue"}}
+  #   end
+  # end
 
   private
 
   def respond_with(resource, _opts = {})
     render json: resource
-end
+  end
 
   def respond_to_on_destroy
     log_out_success && return if current_user

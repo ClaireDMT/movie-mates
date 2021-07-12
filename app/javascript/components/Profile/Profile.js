@@ -16,6 +16,7 @@ const Profile = () => {
       headers: authCtx.headers
     })
       .then(resp => {
+        console.log(resp);
         setFriends(resp.data.data)
       })
       .catch(resp => console.log(resp))
