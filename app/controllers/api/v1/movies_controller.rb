@@ -10,7 +10,7 @@ module Api
 
       def show
         movie = Movie.find(params[:id])
-        render json: MovieSerializer.new(movie, include: [:crews]).serializable_hash.to_json
+        render json: MovieSerializer.new(movie, { params: { include_crews: true }}).serializable_hash.to_json
       end
     end
   end

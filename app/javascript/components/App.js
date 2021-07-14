@@ -32,15 +32,7 @@ const App = () => {
 
   return (
     <Fragment>
-      <div className="d-flex justify-content-around align-items-center">
-        {!isLoggedIn &&
-          <Link to="/users/sign_in">Login</Link>
-        }
-        {isLoggedIn &&
-          <button onClick={logoutHandler}>Sign Out</button>
-        }
-      </div>
-      <Container className="main-container">
+      <Container className="main-container pt-3">
         <Switch>
         {isLoggedIn &&
           <Route path="/genres" component={Genres}/>
@@ -69,7 +61,7 @@ const App = () => {
 
       </Switch>
       </Container>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} logoutHandler={logoutHandler}/>
     </Fragment>
   )
 };

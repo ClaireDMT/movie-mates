@@ -1,21 +1,26 @@
 import React from 'react';
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
-import TinderCard from 'react-tinder-card';
+import Badge from 'react-bootstrap/Badge';
 
 const Movie = (props) => {
 
+  const genres = (props.attributes.genres.data).map(genre => (
+    <Badge variant="primary" key={genre.id} className="d-inline-flex" >
+      {genre.attributes.name}
+    </Badge>
+
+  ))
   return (
-    <TinderCard
-      className="movie__card"
-      bg="primary" text="dark"
-      onSwipe={(dir) => props.swiped(dir, props.movieId)}
-      >
+    <Card bg="dark" text="light" className="movie__card mb-3">
       <div>
-        <Card.Img src={props.attributes.poster_url} className="" />
         <Card.Title>{props.attributes.en_title}</Card.Title>
+        <div className="d-flex justify-content-between">
+          {genres}
+        </div>
       </div>
-    </TinderCard>
+      <Card.Img src={props.attributes.poster_url} className="" />
+    </Card>
   );
 };
 

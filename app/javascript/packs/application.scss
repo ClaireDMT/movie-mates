@@ -6,6 +6,7 @@
 $theme-colors: (
   "primary": $main,
   "secondary": $light-black,
+  "dark": $light-black
 );
 // External libraries
 @import "~bootstrap/scss/bootstrap";
