@@ -2,6 +2,7 @@ module Api
   module V1
     class ScreeningsController < ApplicationController
       def create
+        puts params
         @screening = Screening.new(screening_params)
         @screening.user1 = current_user
         if @screening.save
@@ -14,7 +15,7 @@ module Api
       private
 
       def screening_params
-        params.require(:screening).permit(:user2_id, :user3_id)
+        params.require(:screening).permit(:user2_id)
       end
     end
   end
