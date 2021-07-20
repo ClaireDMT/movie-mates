@@ -12,14 +12,12 @@ const SwipeButtons = () => {
       <IconButton className="btn__watch__later" >
         <WatchLaterOutlinedIcon fontSize="large" />
       </IconButton>
-      <div>
         <IconButton className="btn__thumb__up">
           <ThumbUpAltOutlinedIcon fontSize="large" />
         </IconButton>
         <IconButton className="btn__thumb__down">
           <ThumbDownAltOutlinedIcon fontSize="large" />
         </IconButton>
-      </div>
       <IconButton className="btn__watch__now">
         <VideoCallOutlinedIcon fontSize="large"  />
       </IconButton>

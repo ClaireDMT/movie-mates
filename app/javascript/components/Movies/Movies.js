@@ -87,10 +87,10 @@ const Movies = () => {
 
   return (
     < Fragment>
-      <SwipeButtons />
       <div className="movies__list">
         {list}
       </div>
+      <SwipeButtons />
     </Fragment>
   );
 };
