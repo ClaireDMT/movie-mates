@@ -1,0 +1,8 @@
+.movie__card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  img {
+    width: 25%
+  }
+}

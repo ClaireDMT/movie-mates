@@ -1,6 +1,8 @@
 .swipe-buttons {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 70px;
   width: min-content;
   margin: 16px auto;
   .MuiIconButton-root {

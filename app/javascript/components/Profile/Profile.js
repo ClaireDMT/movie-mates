@@ -10,8 +10,6 @@ const Profile = () => {
 
 
   useEffect(() => {
-    //  get all genre from our API
-    //  update genres in the state
     axios.get('api/v1/friends.json', {
       headers: authCtx.headers
     })
@@ -20,7 +18,7 @@ const Profile = () => {
         setFriends(resp.data.data)
       })
       .catch(resp => console.log(resp))
-  }, [friends.length])
+  }, [])
 
   const grid = friends.map(friend => (
     <Friend
