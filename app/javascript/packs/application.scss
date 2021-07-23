@@ -5,8 +5,11 @@
 
 $theme-colors: (
   "primary": $main,
-  "secondary": $light-black,
-  "dark": $light-black
+  "secondary": $grey,
+  "dark": $grey,
+  "success": $purple-light,
+  "info": $purple-pastel,
+  "warning": $purple-flash
 );
 // External libraries
 @import "~bootstrap/scss/bootstrap";
@@ -19,7 +22,6 @@ $theme-colors: (
 
 
 body {
-
   background: rgb(37,21,46);
   background: linear-gradient(126deg, rgba(37,21,46,1) 16%, rgba(15,13,23,1) 59%);
   color:$main-color-text;
@@ -39,6 +41,9 @@ h1, h2 {
   font-weight: 500;
   text-align: center;
   margin: 16px 0;
+}
+a, button, .btn {
+  border-radius: 10px;
 }
 
 a {

@@ -35,14 +35,14 @@ const Friend = (props) => {
       <div key={screening.id} className="d-flex justify-content-between align-items-center mb-1">
         <p className="mb-0">{date}</p>
         <Link to={'/screenings/' + screening.id + '/movies'} >
-          <Button variant="dark">Keep Swiping</Button>
+          <Button variant="info">Keep Swiping</Button>
         </Link>
       </div>
     )
   })
 
   return (
-    <Card bg="primary" text="dark" className="friend__card">
+    <Card className="friend__card">
       <div className="d-flex justify-content-end align-items-center mb-4">
         <Card.Title className="mr-5">{props.attributes.first_name}</Card.Title>
         <Card.Img src={props.attributes.picture} className="avatar-large" />

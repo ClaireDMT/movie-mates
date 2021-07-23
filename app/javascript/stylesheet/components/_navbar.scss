@@ -8,6 +8,12 @@ nav {
   left: 0;
   right: 0;
   margin: 0 auto;
+  a {
+    color: $purple-flash;
+  }
+  .navbar__link--active {
+    color: white;
+  }
 
   img {
     height: 40px;
