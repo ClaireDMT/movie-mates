@@ -5,7 +5,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import PropTypes from 'prop-types'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./application.scss"
@@ -21,4 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </AuthContextProvider>,
     document.body.appendChild(document.createElement('div')),
   )
+  const container = document.querySelector('body > div');
+  container.classList.add("container","main-container");
+
 })

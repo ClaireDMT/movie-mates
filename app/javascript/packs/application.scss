@@ -19,13 +19,16 @@ $theme-colors: (
 
 
 body {
-  background-color: $black;
-  color: white;
+
+  background: rgb(37,21,46);
+  background: linear-gradient(126deg, rgba(37,21,46,1) 16%, rgba(15,13,23,1) 59%);
+  color:$main-color-text;
   font-family: $body-font;
+  height: 100vh;
 }
 
 .main-container {
-  margin-bottom: 80px;
+  height: 100vh;
   text-align: center;
 }
 
@@ -33,7 +36,7 @@ h1, h2 {
   color: $white;
   font-family: $headers-font;
   font-size: 32px;
-  font-weight: 200;
+  font-weight: 500;
   text-align: center;
   margin: 16px 0;
 }

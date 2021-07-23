@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import AuthContext from '../Store/auth-context';
 
-import Profile from '../Profile/Profile';
-
 const Home = () => {
   const authCtx = useContext(AuthContext);
 

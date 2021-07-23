@@ -11,7 +11,6 @@ import Profile from './Profile/Profile';
 import WatchList from './WatchList/WatchList';
 import Navbar from '../components/Navigation/Navbar';
 import SignIn from '../components/Devise/Registrations/SignIn';
-import Container from 'react-bootstrap/Container';
 
 const App = () => {
   const authCtx = useContext(AuthContext);
@@ -32,35 +31,33 @@ const App = () => {
 
   return (
     <Fragment>
-      <Container className="main-container pt-3">
-        <Switch>
-        {isLoggedIn &&
-          <Route path="/genres" component={Genres}/>
-          }
-        {isLoggedIn &&
-          <Route path="/screenings/:id/movies" component={Movies} />
+      <Switch>
+      {isLoggedIn &&
+        <Route path="/genres" component={Genres}/>
         }
-        {isLoggedIn &&
-          <Route path="/watch_list" component={WatchList} />
-        }
-        {isLoggedIn &&
-          <Route path="/screenings/:id" component={Genres} />
-        }
+      {isLoggedIn &&
+        <Route path="/screenings/:id/movies" component={Movies} />
+      }
+      {isLoggedIn &&
+        <Route path="/watch_list" component={WatchList} />
+      }
+      {isLoggedIn &&
+        <Route path="/screenings/:id" component={Genres} />
+      }
 
 
-        <Route path="/" exact >
-          {isLoggedIn && <Profile /> }
-          {!isLoggedIn && < Home />}
-        </Route>
+      <Route path="/" exact >
+        {isLoggedIn && <Profile /> }
+        {!isLoggedIn && < Home />}
+      </Route>
 
-        <Route path="/users/sign_in" component={SignIn} />
+      <Route path="/users/sign_in" component={SignIn} />
 
-        <Route path="*">
-          <Redirect to='/' />
-        </Route>
+      <Route path="*">
+        <Redirect to='/' />
+      </Route>
 
-      </Switch>
-      </Container>
+    </Switch>
       <Navbar isLoggedIn={isLoggedIn} logoutHandler={logoutHandler}/>
     </Fragment>
   )

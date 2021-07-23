@@ -1,9 +1,13 @@
 nav {
   height: 70px;
-  width: 100%;
+  width: 90%;
+  border-radius: 12px;
   position: fixed;
-  bottom: 0;
-  background-color: black;
+  bottom: 24px;
+  background-color: $purple;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 
   img {
     height: 40px;
