@@ -25,16 +25,13 @@ const Movies = () => {
     console.log(dir);
     switch (dir) {
       case 'left':
-        addToFavoriteMovies(movieId, "to watch");
+        // addToBlackList(movieId, "disliked!");
         break;
       case 'right':
         addToScreeningMovies(movieId);
         break;
-      case 'up':
-        // addToFavoriteMovies(movieId, "liked!");
-        break;
       case 'down':
-        // addToFavoriteMovies(movieId, "disliked!");
+        addToFavoriteMovies(movieId);
         break;
       default:
         console.log('Sorry, you don\'t know how to swipe');

@@ -7,8 +7,8 @@ class Api::V1::UserMoviesController < ApplicationController
 
   def create
     @movie = Movie.find(params[:user_movie][:movie_id])
-    @user_movie = UserMovie.new(toWatch: true, movie: @movie, user: current_user)
-    if @user_movie.after_save
+    @user_movie = UserMovie.new(watched: true, movie: @movie, user: current_user)
+    if @user_movie.save
       render json: @user_movie.to_json
     else
       render json: @user_movie.errors.messages.to_json
