@@ -5,9 +5,16 @@
 
 $theme-colors: (
   "primary": $main,
-  "secondary": $light-black,
-  "dark": $light-black
+  "secondary": $secondary,
+  "dark": $light-black,
+  "info": $gray,
+  "danger": $main,
+  "body-color": $light-black,
+  "success":    $main,
+  "warning":    $main,
 );
+
+
 // External libraries
 @import "~bootstrap/scss/bootstrap";
 // @import "font-awesome-sprockets";
