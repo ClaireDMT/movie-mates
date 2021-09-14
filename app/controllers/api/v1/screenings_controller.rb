@@ -11,6 +11,12 @@ module Api
         end
       end
 
+      def show
+        @screening = Screening.find(params[:id])
+        @movies = @screening.movies
+        render json: MovieSerializer.new(@movies).serializable_hash.to_json
+      end
+
       private
 
       def screening_params

@@ -11,9 +11,9 @@ const Navbar = (props) => {
       <Link to="/">
         <img src={friends} alt=""/>
       </Link>
-      <Link to="/genres">
+      {/* <Link to="/genres">
         <img src={popCorn} alt="" />
-      </Link>
+      </Link> */}
       <Link to="/watch_list">
         <img src={watchList} alt="" />
       </Link>

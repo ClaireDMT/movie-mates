@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :crews, only: [:index, :show]
       resources :genres, only: [:index]
-      resources :screenings, only: [:create] do
+      resources :screenings, only: [:create, :show] do
         resources :screening_genres, only: [:create]
         resources :movies, only: [:index]
         resources :screening_movies, only: [:create]

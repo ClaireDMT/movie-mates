@@ -22,7 +22,7 @@ const Friend = (props) => {
       headers: authCtx.headers
     })
       .then(resp => {
-        history.push(`/screenings/${resp.data.data.id}`)
+        history.push(`/screenings/${resp.data.data.id}/genres`)
       })
       .catch(resp => console.log(resp))
   }
@@ -34,9 +34,13 @@ const Friend = (props) => {
     return (
       <div key={screening.id} className="d-flex justify-content-between align-items-center mb-1">
         <p className="mb-0">{date}</p>
-        <Link to={'/screenings/' + screening.id + '/movies'} >
-          <Button variant="dark">Keep Swiping</Button>
+        <Link to={'/screenings/' + screening.id} >
+          <Button variant="info">Matches</Button>
         </Link>
+        <Link to={'/screenings/' + screening.id + '/movies'} >
+          <Button variant="dark">Swipe</Button>
+        </Link>
+
       </div>
     )
   })

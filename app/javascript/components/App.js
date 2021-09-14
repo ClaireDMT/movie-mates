@@ -35,16 +35,16 @@ const App = () => {
       <Container className="main-container pt-3">
         <Switch>
         {isLoggedIn &&
-          <Route path="/genres" component={Genres}/>
-          }
-        {isLoggedIn &&
           <Route path="/screenings/:id/movies" component={Movies} />
         }
         {isLoggedIn &&
           <Route path="/watch_list" component={WatchList} />
         }
         {isLoggedIn &&
-          <Route path="/screenings/:id" component={Genres} />
+          <Route path="/screenings/:id/genres" component={Genres} />
+        }
+        {isLoggedIn &&
+          <Route path="/screenings/:id" component={WatchList} />
         }
 
 
