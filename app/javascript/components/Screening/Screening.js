@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../Store/auth-context';
 import Movie from '../Movies/Movie';
 
-const WatchList = () => {
+const Screening = () => {
   const [movies, setMovies] = useState([]);
   const authCtx = useContext(AuthContext);
+  const params = useParams();
 
   useEffect(() => {
-    const url = 'api/v1/user_movies.json';
+    console.log(params);
+    const url = `/api/v1/screenings/${params.id}.json`;
     axios.get(url, {
       headers: authCtx.headers
     })
@@ -28,11 +31,11 @@ const WatchList = () => {
 
   return (
     <div>
-     <h1>Your watch list</h1>
+      <h1>Screening with</h1>
 
       {moviesList}
     </div>
   );
 };
 
-export default WatchList;
+export default Screening;

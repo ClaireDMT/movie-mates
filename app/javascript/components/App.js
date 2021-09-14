@@ -9,6 +9,7 @@ import Movies from './Movies/Movies';
 import Genres from './Genres/Genres';
 import Profile from './Profile/Profile';
 import WatchList from './WatchList/WatchList';
+import Screening from './Screening/Screening';
 import Navbar from '../components/Navigation/Navbar';
 import SignIn from '../components/Devise/Registrations/SignIn';
 import Container from 'react-bootstrap/Container';
@@ -44,7 +45,7 @@ const App = () => {
           <Route path="/screenings/:id/genres" component={Genres} />
         }
         {isLoggedIn &&
-          <Route path="/screenings/:id" component={WatchList} />
+          <Route path="/screenings/:id" component={Screening} />
         }
 
 

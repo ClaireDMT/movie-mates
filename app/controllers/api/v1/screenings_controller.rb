@@ -13,7 +13,7 @@ module Api
 
       def show
         @screening = Screening.find(params[:id])
-        @movies = @screening.movies
+        @movies = @screening.screening_movies.where(status: 2).extract_associated(:movie)
         render json: MovieSerializer.new(@movies).serializable_hash.to_json
       end
 
