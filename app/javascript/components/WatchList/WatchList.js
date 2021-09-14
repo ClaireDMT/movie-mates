@@ -8,11 +8,11 @@ import Movie from '../Movies/Movie';
 const WatchList = () => {
   const [movies, setMovies] = useState([]);
   const authCtx = useContext(AuthContext);
-  const location = useLocation().pathname;
-  const isWatchList = location === "/watch_list"
-  const url = location === "/watch_list" ? 'api/v1/user_movies.json' :  `/api/v1${location}.json`;
 
   useEffect(() => {
+    const location = useLocation().pathname;
+    const isWatchList = location === "/watch_list"
+    const url = location === "/watch_list" ? 'api/v1/user_movies.json' :  `/api/v1${location}.json`;
     axios.get(url, {
       headers: authCtx.headers
     })

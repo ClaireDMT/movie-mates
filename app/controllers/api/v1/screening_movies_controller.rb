@@ -8,7 +8,7 @@ module Api
           update_status
           render json: @screening_movie
         else
-          @screening_movie = ScreeningMovie.new(movie: @movie, screening: @screening, status: 0)
+          @screening_movie = ScreeningMovie.new(movie: @movie, screening: @screening, user: current_user)
           render json: @screening_movie.save ? @screening_movie : @screening_movies.errors.messages.to_json
         end
       end

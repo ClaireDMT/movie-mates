@@ -25,25 +25,27 @@ const Movies = () => {
     console.log(dir);
     switch (dir) {
       case 'left':
-        // addToBlackList(movieId, "disliked!");
+        addToFavoriteMovies(movieId, false);
         break;
       case 'right':
         addToScreeningMovies(movieId);
         break;
       case 'down':
-        addToFavoriteMovies(movieId);
+        addToFavoriteMovies(movieId, true);
         break;
       default:
         console.log('Sorry, you don\'t know how to swipe');
     }
   }
 
-  const addToFavoriteMovies = (movieId) => {
+  const addToFavoriteMovies = (movieId, isToWatch) => {
     axios.post(`/api/v1/user_movies.json`,
       {
         "user_movie":
         {
-          "movie_id": movieId
+          "movie_id": movieId,
+          "watched": !isToWatch,
+          "toWatch": isToWatch,
         }
       },
       {
