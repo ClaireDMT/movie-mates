@@ -4,7 +4,7 @@ module Api
       def index
         @screening = Screening.find(params[:screening_id])
         @screening_genres = @screening.genres.pluck(:id)
-        @movies = Movie.joins(:genres).where(genres: {id: @screening_genres}).distinct.where.not(movies: {id: @already_swiped_movies}).order('imdb_rating desc').limit(10).includes(:crews)
+        @movies = Movie.joins(:genres).where(genres: {id: @screening_genres}).where.not(movies: {id: already_swiped_movies}).distinct.order('imdb_rating desc').limit(10).includes(:crews)
         p "already swiped! #{already_swiped_movies} - end"
         render json: MovieSerializer.new(@movies).serializable_hash.to_json
       end
