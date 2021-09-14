@@ -3,7 +3,7 @@ import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
 import TinderCard from 'react-tinder-card';
 
-const Movie = (props) => {
+const SwipableMovie = (props) => {
 
   return (
     <TinderCard
@@ -19,4 +19,4 @@ const Movie = (props) => {
   );
 };
 
-export default Movie;
+export default SwipableMovie;

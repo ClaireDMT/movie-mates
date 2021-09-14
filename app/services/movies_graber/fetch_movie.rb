@@ -31,7 +31,7 @@ module MoviesGraber
     end
 
     def many_ratings?
-      @imdb_infos[:rating_number].include?("K")
+      @imdb_infos[:rating_number].include?("K") || @imdb_infos[:rating_number].include?("M")
     end
 
     def check_rating?(imdb_id)
