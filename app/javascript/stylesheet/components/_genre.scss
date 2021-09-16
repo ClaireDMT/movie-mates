@@ -1,11 +1,10 @@
 .genre__card {
-  border: 3px solid $main;
-  height: 100px;
-  display: flex;
-  flex-direction: column;
+  height: 50px;
+  padding: 8px 8px;
+  margin: 8px 8px 8px 0;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 10px;
+  border-radius: 16px;
   background-color: white;
   color:black;
   img {
@@ -20,4 +19,5 @@
 .genre__name {
   text-align: center;
   font-weight: 200;
+  margin-left: 4px
 }

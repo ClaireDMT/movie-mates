@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(version: 2021_09_14_140924) do
 
   create_table "screenings", force: :cascade do |t|
     t.bigint "user1_id", null: false
-    t.bigint "user2_id", null: false
+    t.bigint "user2_id"
     t.bigint "user3_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

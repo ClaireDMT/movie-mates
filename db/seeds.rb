@@ -35,4 +35,9 @@ claire.friend_request(soso)
 # yannick can accept the friend request
 soso.accept_request(claire)
 
+#  Fetch Genre
+GenresJob.perform_later
 
+#  Fetch Moive from 2020
+
+MoviesJob.perform_later(2020)

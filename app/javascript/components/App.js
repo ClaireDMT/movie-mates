@@ -4,12 +4,14 @@ import axios from 'axios';
 
 //  IMPORT COMPONENTS
 import AuthContext from './Store/auth-context';
+import ProtectedRoute from './Devise/ProtectedRoute';
 import Home from './Home/Home';
 import Movies from './Movies/Movies';
 import Genres from './Genres/Genres';
 import Profile from './Profile/Profile';
 import WatchList from './WatchList/WatchList';
 import Screening from './Screening/Screening';
+import NewScreening from './Screening/NewScreening';
 import Navbar from '../components/Navigation/Navbar';
 import SignIn from '../components/Devise/Registrations/SignIn';
 import Container from 'react-bootstrap/Container';
@@ -35,19 +37,11 @@ const App = () => {
     <Fragment>
       <Container className="main-container pt-3">
         <Switch>
-        {isLoggedIn &&
-          <Route path="/screenings/:id/movies" component={Movies} />
-        }
-        {isLoggedIn &&
-          <Route path="/watch_list" component={WatchList} />
-        }
-        {isLoggedIn &&
-          <Route path="/screenings/:id/genres" component={Genres} />
-        }
-        {isLoggedIn &&
-          <Route path="/screenings/:id" component={Screening} />
-        }
-
+          <ProtectedRoute  path="/screenings/new" component={NewScreening} />
+          <ProtectedRoute  path="/watch_list" component={WatchList} />
+          <ProtectedRoute  path="/screenings/:id/movies" component={Movies} />
+          <ProtectedRoute  path="/screenings/:id/genres" component={Genres} />
+          <ProtectedRoute  path="/screenings/:id" component={Screening} />
 
         <Route path="/" exact >
           {isLoggedIn && <Profile /> }
