@@ -12,6 +12,7 @@ const Genres = () => {
   const history = useHistory();
   const authCtx = useContext(AuthContext);
 
+
   useEffect(() => {
     //  get all genre from our API
     //  update genres in the state
@@ -19,7 +20,7 @@ const Genres = () => {
       headers: authCtx.headers
     })
     .then( resp => {
-      setGenres(resp.data.data)
+      setGenres(resp.data.data.sort(() => Math.random() - 0.5))
     })
     .catch( resp => console.log(resp) )
   }, [genres.length])
@@ -52,11 +53,11 @@ const Genres = () => {
     const selected = selectedGenres.includes(genre.id)
     return(
       <Genre
-        onClick={() => toggleSelect(genre.id)}
-        key={genre.id}
-        attributes={genre.attributes}
-        selected={selected}
-      />)
+          onClick={() => toggleSelect(genre.id)}
+          key={genre.id}
+          attributes={genre.attributes}
+          selected={selected} />
+    )
   })
   return (
     <Fragment>
@@ -65,10 +66,9 @@ const Genres = () => {
         onClick={createScreeningGenres}
         className="btn-submit-genres"
         variant="primary">done!</Button>
-      <div className="genres__list">
-        {grid}
-      </div>
-
+        <div className="genres__list">
+          {grid}
+        </div>
     </Fragment>
   );
 };
