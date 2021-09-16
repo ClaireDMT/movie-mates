@@ -4,11 +4,13 @@ import axios from 'axios';
 import AuthContext from '../Store/auth-context';
 import Movie from './SwipableMovie';
 import SwipeButtons from './SwipeButtons';
+import { Modal, Button } from "react-bootstrap";
 
 const Movies = () => {
   const params = useParams();
   const authCtx = useContext(AuthContext);
   const [movies, setMovies] = useState([]);
+  const [modalOpen, setModal] = useState(false);
 
   useEffect(() => {
     axios.get(`/api/v1/screenings/${params.id}/movies.json`, {
@@ -67,7 +69,10 @@ const Movies = () => {
       headers: authCtx.headers
     })
     .then(resp => {
-      console.log(resp)
+      console.log(resp);
+      if (resp.data.status === "voted_by_all") {
+        openModal();
+      }
       // setMovies(resp.data.data);
     })
     .catch(resp => console.log(resp))
@@ -82,6 +87,8 @@ const Movies = () => {
       />)
   )
 
+  const openModal = () => setModal(true);
+  const closeModal = () => setModal(false);
 
 
   return (
@@ -89,7 +96,10 @@ const Movies = () => {
       <div className="movies__list">
         {list}
       </div>
-      <SwipeButtons />
+      <Modal show={modalOpen}  dialogClassName="match-modal">
+        <h2>Yippie-Ki-Yay</h2>
+        <p>You and X would like to watch this movie</p>
+      </Modal>
     </Fragment>
   );
 };
