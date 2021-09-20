@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_14_140924) do
+ActiveRecord::Schema.define(version: 2021_07_09_152555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,12 +109,16 @@ ActiveRecord::Schema.define(version: 2021_09_14_140924) do
     t.bigint "movie_id", null: false
     t.bigint "screening_id", null: false
     t.integer "status"
+    t.bigint "user1_id", null: false
+    t.bigint "user2_id"
+    t.bigint "user3_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id"
     t.index ["movie_id"], name: "index_screening_movies_on_movie_id"
     t.index ["screening_id"], name: "index_screening_movies_on_screening_id"
-    t.index ["user_id"], name: "index_screening_movies_on_user_id"
+    t.index ["user1_id"], name: "index_screening_movies_on_user1_id"
+    t.index ["user2_id"], name: "index_screening_movies_on_user2_id"
+    t.index ["user3_id"], name: "index_screening_movies_on_user3_id"
   end
 
   create_table "screenings", force: :cascade do |t|
@@ -167,7 +171,9 @@ ActiveRecord::Schema.define(version: 2021_09_14_140924) do
   add_foreign_key "screening_genres", "screenings"
   add_foreign_key "screening_movies", "movies"
   add_foreign_key "screening_movies", "screenings"
-  add_foreign_key "screening_movies", "users"
+  add_foreign_key "screening_movies", "users", column: "user1_id"
+  add_foreign_key "screening_movies", "users", column: "user2_id"
+  add_foreign_key "screening_movies", "users", column: "user3_id"
   add_foreign_key "screenings", "movies"
   add_foreign_key "screenings", "users", column: "user1_id"
   add_foreign_key "screenings", "users", column: "user2_id"

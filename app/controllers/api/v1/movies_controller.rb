@@ -18,7 +18,10 @@ module Api
 
       #  remove from the swiping list the movies already swiped
       def already_swiped_movies
-        current_user.watched_movies.pluck(:id) + ScreeningMovie.where(user: current_user, screening: @screening).pluck(:movie_id)
+        @watched = current_user.watched_movies.pluck(:id)
+        @swiped_first = ScreeningMovie.where(user1: current_user, screening: @screening).pluck(:movie_id)
+        @swiped_second = ScreeningMovie.where(user2: current_user, screening: @screening).pluck(:movie_id)
+        return @watched + @swiped_first + @swiped_second
       end
     end
   end

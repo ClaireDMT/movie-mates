@@ -4,11 +4,33 @@ import axios from 'axios';
 import AuthContext from '../Store/auth-context';
 import Movie from './SwipableMovie';
 import SwipeButtons from './SwipeButtons';
+import { Modal, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Movies = () => {
   const params = useParams();
   const authCtx = useContext(AuthContext);
   const [movies, setMovies] = useState([]);
+  const [screening, setScreening] = useState({});
+  const [modalOpen, setModal] = useState(false);
+  const [otherUser, setOtherUser] = useState({});
+  const [lastMovie, setLastMovie] = useState({});
+
+  useEffect(() => {
+    axios.get(`/api/v1/screenings/${params.id}`, {
+      headers: authCtx.headers
+    })
+      .then(resp => {
+        const screening = resp.data.data;
+        setScreening(screening);
+        if (authCtx.userId === screening.attributes.user1.id) {
+          setOtherUser(screening.attributes.user2)
+        } else {
+          setOtherUser(screening.attributes.user1)
+        }
+      })
+      .catch(resp => console.log(resp))
+  }, [])
 
   useEffect(() => {
     axios.get(`/api/v1/screenings/${params.id}/movies.json`, {
@@ -67,8 +89,11 @@ const Movies = () => {
       headers: authCtx.headers
     })
     .then(resp => {
-      console.log(resp)
-      // setMovies(resp.data.data);
+      console.log(resp.data);
+      if (resp.data.match === true) {
+        setLastMovie(resp.data.movie.data.attributes);
+        openModal();
+      }
     })
     .catch(resp => console.log(resp))
   }
@@ -82,14 +107,27 @@ const Movies = () => {
       />)
   )
 
-
+  const openModal = () => setModal(true);
+  const closeModal = () => setModal(false);
 
   return (
     < Fragment>
       <div className="movies__list">
         {list}
       </div>
-      <SwipeButtons />
+      <Modal show={modalOpen}  dialogClassName="match-modal">
+        <h2>Yippie-Ki-Yay!</h2>
+        <p>{otherUser.first_name} also wants to watch</p>
+        <img src={lastMovie.poster_url} className="" />
+        <p>{lastMovie.en_title}</p>
+        <Link to={'/screenings/' + screening.id + '/matches'} >
+          <Button variant="info">See all matches</Button>
+        </Link>
+        <Link to="/">
+          <Button variant="light">Send message</Button>
+        </Link>
+        <Button onClick={closeModal} variant="dark">Keep swiping</Button>
+      </Modal>
     </Fragment>
   );
 };

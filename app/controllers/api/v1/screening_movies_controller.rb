@@ -6,9 +6,9 @@ module Api
         @screening_movie = ScreeningMovie.find_by(movie: @movie, screening: @screening)
         if @screening_movie
           update_status
-          render json: @screening_movie
+          render json: {match: true ,movie: MovieSerializer.new(@movie).serializable_hash, screening: ScreeningSerializer.new(@screening).serializable_hash }
         else
-          @screening_movie = ScreeningMovie.new(movie: @movie, screening: @screening, user: current_user)
+          @screening_movie = ScreeningMovie.new(movie: @movie, screening: @screening, user1: current_user)
           render json: @screening_movie.save ? @screening_movie : @screening_movies.errors.messages.to_json
         end
       end
@@ -22,6 +22,7 @@ module Api
 
       def update_status
         @screening_movie.status = match? ? 2 : 1
+        @screening_movie.user2 = current_user
         @screening_movie.save
       end
 

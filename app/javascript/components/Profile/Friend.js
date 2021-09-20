@@ -34,7 +34,7 @@ const Friend = (props) => {
     return (
       <div key={screening.id} className="d-flex justify-content-between align-items-center mb-1">
         <p className="mb-0">{date}</p>
-        <Link to={'/screenings/' + screening.id} >
+        <Link to={'/screenings/' + screening.id + '/matches'} >
           <Button variant="info">Matches</Button>
         </Link>
         <Link to={'/screenings/' + screening.id + '/movies'} >

@@ -1,0 +1,15 @@
+.match-modal {
+  height: 100vh;
+  margin: 0;
+  .modal-content {
+    height: 100%;
+    padding: 100px 16px;
+    background-color: black;
+    opacity: 0.8;
+    text-align: center;
+  }
+  img {
+    height: 150px;
+    object-fit: contain;
+  }
+}

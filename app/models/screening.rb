@@ -6,4 +6,8 @@ class Screening < ApplicationRecord
   has_many :movies, through: :screening_movies
   has_many :screening_genres, dependent: :destroy
   has_many :genres, through: :screening_genres
+
+  def users
+    [user1, user2, user3]
+  end
 end

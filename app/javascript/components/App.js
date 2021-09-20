@@ -19,7 +19,7 @@ import Container from 'react-bootstrap/Container';
 const App = () => {
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
-
+  console.log(authCtx);
   const logoutHandler = () => {
     axios.delete('/users/sign_out', {
       headers: authCtx.headers
@@ -41,7 +41,7 @@ const App = () => {
           <ProtectedRoute  path="/watch_list" component={WatchList} />
           <ProtectedRoute  path="/screenings/:id/movies" component={Movies} />
           <ProtectedRoute  path="/screenings/:id/genres" component={Genres} />
-          <ProtectedRoute  path="/screenings/:id" component={Screening} />
+          <ProtectedRoute  path="/screenings/:id/matches" component={Screening} />
 
         <Route path="/" exact >
           {isLoggedIn && <Profile /> }

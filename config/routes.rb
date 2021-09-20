@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         resources :screening_movies, only: [:create]
       end
       get '/friends', to: 'users#friends'
-
+      get 'screenings/:id/matches', to: 'screenings#matches'
       resources :user_movies, only: [:create, :index]
     end
   end
