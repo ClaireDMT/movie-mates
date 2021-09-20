@@ -6,16 +6,20 @@ import Badge from 'react-bootstrap/Badge';
 const Movie = (props) => {
 
   const genres = (props.attributes.genres.data).map(genre => (
-    <Badge variant="primary" key={genre.id} className="d-inline-flex" >
+    <Badge variant="primary" key={genre.id} className="d-inline-flex mr-1" >
       {genre.attributes.name}
     </Badge>
 
   ))
   return (
     <Card bg="dark" text="light" className="movie__card mb-3">
-      <div>
+      <div className="movie__card__infos p-2 pt-3">
         <Card.Title>{props.attributes.en_title}</Card.Title>
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-around" >
+          <p>{props.attributes.imdb_rating}</p>
+          <p>{props.attributes.year}</p>
+        </div>
+        <div className="">
           {genres}
         </div>
       </div>
