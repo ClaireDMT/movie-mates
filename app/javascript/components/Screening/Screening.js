@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../Store/auth-context';
@@ -11,7 +11,7 @@ const Screening = () => {
 
   useEffect(() => {
     console.log(params);
-    const url = `/api/v1/screenings/${params.id}.json`;
+    const url = `/api/v1/screenings/${params.id}/matches.json`;
     axios.get(url, {
       headers: authCtx.headers
     })
@@ -30,11 +30,11 @@ const Screening = () => {
   ))
 
   return (
-    <div>
+    <Fragment>
       <h1>Screening with</h1>
 
       {moviesList}
-    </div>
+    </Fragment>
   );
 };
 

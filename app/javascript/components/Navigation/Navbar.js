@@ -18,20 +18,16 @@ const Navbar = (props) => {
       <Link to="/">
         <img src={chat} alt="" />
       </Link>
-      <Link to="/">
-        <img src={user} alt="" />
-      </Link>
-
-      {/* {!props.isLoggedIn &&
-        <Button variant="dark">
-          <Link to="/users/sign_in">Login</Link>
-        </Button>
+      {!props.isLoggedIn &&
+        <Link to="/users/sign_in">
+          <img src={user} alt="" />
+        </Link>
       }
-      {props.isLoggedIn &&
-        <Button variant="dark" onClick={props.logoutHandler}>
-          Sign Out
-        </Button>
-      } */}
+      { props.isLoggedIn &&
+        <Link to="/users/sign_in">
+          <img src={user} alt="" />
+        </Link>
+      }
     </nav>
   );
 };
